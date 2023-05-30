@@ -1,12 +1,12 @@
 package com.api.bompreparo.domain.services.servicesImpl;
 
+import com.api.bompreparo.data.repositories.RoleRepository;
 import com.api.bompreparo.data.repositories.UserRepository;
 import com.api.bompreparo.domain.models.User;
-import com.api.bompreparo.domain.models.enums.Role;
+import com.api.bompreparo.domain.models.Role;
 import com.api.bompreparo.domain.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -16,11 +16,13 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Override
@@ -103,7 +105,8 @@ public class UserServiceImpl implements UserService {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         userModel.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
 
-        userModel.setRoles(List.of(Role.ROLE_USER));
+        Role roleUser = roleRepository.findByName("ROLE_USER");
+        userModel.setRoles(List.of(roleUser));
 
         userModel = userRepository.save(userModel);
 

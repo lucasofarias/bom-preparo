@@ -5,6 +5,7 @@ import com.api.bompreparo.domain.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -20,7 +21,7 @@ public class UserController {
         this.userService = userService;
     }
 
-//    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_ADMIN")
     @PostMapping(value = "/create")
     public ResponseEntity<Object> create(@RequestBody User obj) {
         try {
@@ -32,7 +33,7 @@ public class UserController {
         }
     }
 
-//    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_ADMIN")
     @GetMapping(value = "/read")
     public ResponseEntity<Object> read(@RequestParam(value = "id") UUID id) {
         try {
@@ -44,7 +45,7 @@ public class UserController {
         }
     }
 
-//    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_ADMIN")
     @PutMapping(value = "/update")
     public ResponseEntity<Object> update(@RequestBody User obj) {
         try {
@@ -57,7 +58,7 @@ public class UserController {
         }
     }
 
-//    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_ADMIN")
     @DeleteMapping(value = "/delete")
     public ResponseEntity<Object> delete(@RequestParam(value = "id") UUID id) {
         try {
@@ -70,7 +71,7 @@ public class UserController {
         }
     }
 
-//    @Secured("ROLE_ADMIN")
+    @Secured("ROLE_ADMIN")
     @GetMapping(value = "/list")
     public ResponseEntity<Object> list() {
         try {
