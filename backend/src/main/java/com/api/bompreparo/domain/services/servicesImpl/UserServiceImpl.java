@@ -5,8 +5,11 @@ import com.api.bompreparo.domain.models.User;
 import com.api.bompreparo.domain.models.enums.Role;
 import com.api.bompreparo.domain.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -96,8 +99,11 @@ public class UserServiceImpl implements UserService {
         userModel.setFullName(user.getFullName());
         userModel.setEmail(user.getEmail());
         userModel.setCpf(user.getCpf());
-        userModel.setPassword(user.getPassword());
-        userModel.setRole(Role.ROLE_USER);
+
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        userModel.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
+        userModel.setRoles(List.of(Role.ROLE_USER));
 
         userModel = userRepository.save(userModel);
 
