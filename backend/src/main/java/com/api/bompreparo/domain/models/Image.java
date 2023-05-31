@@ -18,6 +18,7 @@ public class Image {
     private String type;
 
     @Lob
+    @Column(length = 1000)
     private byte[] data;
 
     @ManyToOne

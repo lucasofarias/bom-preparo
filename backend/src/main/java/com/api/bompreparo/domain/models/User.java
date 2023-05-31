@@ -1,5 +1,7 @@
 package com.api.bompreparo.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,6 +15,7 @@ import java.util.UUID;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User implements UserDetails {
 
     @Id @GeneratedValue
@@ -23,10 +26,10 @@ public class User implements UserDetails {
     private String cpf;
     private String password;
 
-    @OneToMany(mappedBy = "creatorUser")
+    @OneToMany(mappedBy = "creatorUser", fetch = FetchType.EAGER)
     private List<Recipe> recipes;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),

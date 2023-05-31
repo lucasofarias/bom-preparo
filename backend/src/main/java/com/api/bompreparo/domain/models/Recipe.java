@@ -1,5 +1,7 @@
 package com.api.bompreparo.domain.models;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +12,7 @@ import java.util.UUID;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Recipe {
 
     @Id @GeneratedValue
@@ -19,7 +22,7 @@ public class Recipe {
     private String preparation;
     private boolean isPrivate;
 
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER)
     private List<Image> images;
 
     @ManyToOne

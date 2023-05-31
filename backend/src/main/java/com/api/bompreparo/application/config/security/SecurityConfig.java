@@ -23,11 +23,15 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfig {
 
+    @Autowired
     private final UserDetailsServiceImpl userDetailsServiceImpl;
-    private final UnauthorizedHandler unauthorizedHandler;
-    private final AccessDeniedHandler accessDeniedHandler;
 
     @Autowired
+    private final UnauthorizedHandler unauthorizedHandler;
+
+    @Autowired
+    private final AccessDeniedHandler accessDeniedHandler;
+
     public SecurityConfig(UserDetailsServiceImpl userDetailsServiceImpl, UnauthorizedHandler unauthorizedHandler, AccessDeniedHandler accessDeniedHandler) {
         this.userDetailsServiceImpl = userDetailsServiceImpl;
         this.unauthorizedHandler = unauthorizedHandler;

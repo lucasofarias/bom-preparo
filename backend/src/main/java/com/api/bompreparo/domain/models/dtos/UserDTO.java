@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MatchingStrategy;
 
 import java.util.UUID;
 
@@ -17,7 +16,6 @@ public class UserDTO {
     private String username;
     private String fullName;
     private String email;
-    private String cpf;
 
     public static UserDTO toDTO(User user) {
         ModelMapper modelMapper = new ModelMapper();
