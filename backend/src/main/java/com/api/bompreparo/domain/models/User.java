@@ -23,6 +23,9 @@ public class User implements UserDetails {
     private String cpf;
     private String password;
 
+    @OneToMany(mappedBy = "creatorUser")
+    private List<Recipe> recipes;
+
     @ManyToMany
     @JoinTable(
             name = "users_roles",

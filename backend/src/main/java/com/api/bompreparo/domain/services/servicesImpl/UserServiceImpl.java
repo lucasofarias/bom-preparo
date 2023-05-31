@@ -16,10 +16,12 @@ import java.util.UUID;
 @Service
 public class UserServiceImpl implements UserService {
 
+    @Autowired
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
 
     @Autowired
+    private final RoleRepository roleRepository;
+
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
