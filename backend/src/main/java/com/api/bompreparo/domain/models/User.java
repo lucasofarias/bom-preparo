@@ -15,7 +15,6 @@ import java.util.UUID;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class User implements UserDetails {
 
     @Id @GeneratedValue
@@ -24,9 +23,6 @@ public class User implements UserDetails {
     private String fullName;
     private String email;
     private String password;
-
-    @OneToMany(mappedBy = "creatorUser", fetch = FetchType.EAGER)
-    private List<Recipe> recipes;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(

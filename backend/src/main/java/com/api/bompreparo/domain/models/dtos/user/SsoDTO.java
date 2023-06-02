@@ -1,4 +1,4 @@
-package com.api.bompreparo.domain.models.dtos;
+package com.api.bompreparo.domain.models.dtos.user;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

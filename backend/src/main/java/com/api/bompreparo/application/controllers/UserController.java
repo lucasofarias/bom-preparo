@@ -1,8 +1,8 @@
 package com.api.bompreparo.application.controllers;
 
 import com.api.bompreparo.domain.models.User;
-import com.api.bompreparo.domain.models.dtos.SignUpDTO;
-import com.api.bompreparo.domain.models.dtos.UpdateUserDTO;
+import com.api.bompreparo.domain.models.dtos.user.SignUpDTO;
+import com.api.bompreparo.domain.models.dtos.user.UpdateUserDTO;
 import com.api.bompreparo.domain.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

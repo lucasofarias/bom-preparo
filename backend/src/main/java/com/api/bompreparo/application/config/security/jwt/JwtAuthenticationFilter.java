@@ -1,8 +1,8 @@
 package com.api.bompreparo.application.config.security.jwt;
 
 import com.api.bompreparo.domain.models.User;
-import com.api.bompreparo.domain.models.dtos.SsoDTO;
-import com.api.bompreparo.domain.models.dtos.UserDTO;
+import com.api.bompreparo.domain.models.dtos.user.SsoDTO;
+import com.api.bompreparo.domain.models.dtos.user.UserDTO;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.FilterChain;

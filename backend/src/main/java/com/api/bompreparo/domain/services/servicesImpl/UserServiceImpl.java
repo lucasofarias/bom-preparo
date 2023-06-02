@@ -4,9 +4,9 @@ import com.api.bompreparo.data.repositories.RoleRepository;
 import com.api.bompreparo.data.repositories.UserRepository;
 import com.api.bompreparo.domain.models.User;
 import com.api.bompreparo.domain.models.Role;
-import com.api.bompreparo.domain.models.dtos.SignUpDTO;
-import com.api.bompreparo.domain.models.dtos.UpdateUserDTO;
-import com.api.bompreparo.domain.models.dtos.UserDTO;
+import com.api.bompreparo.domain.models.dtos.user.SignUpDTO;
+import com.api.bompreparo.domain.models.dtos.user.UpdateUserDTO;
+import com.api.bompreparo.domain.models.dtos.user.UserDTO;
 import com.api.bompreparo.domain.services.UserService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -71,7 +70,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("O usuário não foi encontrado."));
 
-        if (!user.getId().equals(this.getCurrentUser().getUserId())) {
+        if (!user.getId().equals(this.getCurrentUser().getId())) {
             throw new IllegalArgumentException("Não é possível deletar a conta de outros usuários.");
         }
 
@@ -79,12 +78,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getCurrentUser() {
+    public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = (User) authentication.getPrincipal();
 
-        return UserDTO.toDTO(userRepository.findById(currentUser.getId())
-                .orElseThrow(() -> new IllegalArgumentException("O usuário não foi encontrado.")));
+        return userRepository.findById(currentUser.getId())
+                .orElseThrow(() -> new IllegalArgumentException("O usuário não foi encontrado."));
     }
 
     @Override
@@ -139,7 +138,7 @@ public class UserServiceImpl implements UserService {
         User userModel = userRepository.findById(updateUserDTO.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("O usuário não foi encontrado."));
 
-        if (!userModel.getId().equals(this.getCurrentUser().getUserId())) {
+        if (!userModel.getId().equals(this.getCurrentUser().getId())) {
             throw new IllegalArgumentException("Não é possível alterar os dados da conta de um outro usuário.");
         }
 

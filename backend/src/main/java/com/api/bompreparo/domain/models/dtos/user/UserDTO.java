@@ -1,4 +1,4 @@
-package com.api.bompreparo.domain.models.dtos;
+package com.api.bompreparo.domain.models.dtos.user;
 
 import com.api.bompreparo.domain.models.User;
 import lombok.AllArgsConstructor;
