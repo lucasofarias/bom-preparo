@@ -10,8 +10,7 @@ public class SignUpDTO {
     private String username;
     private String fullName;
     private String email;
-    private String cpf;
     private String password;
-    private String confirmPassword;
+    private String passwordConfirmation;
 
 }

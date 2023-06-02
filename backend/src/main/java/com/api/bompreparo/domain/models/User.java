@@ -23,7 +23,6 @@ public class User implements UserDetails {
     private String username;
     private String fullName;
     private String email;
-    private String cpf;
     private String password;
 
     @OneToMany(mappedBy = "creatorUser", fetch = FetchType.EAGER)

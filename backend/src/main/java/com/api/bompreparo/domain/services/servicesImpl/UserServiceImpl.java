@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void signUp(SignUpDTO signUpDTO) {
         if (signUpDTO.getUsername().trim().isEmpty() || signUpDTO.getFullName().trim().isEmpty() || signUpDTO.getEmail().trim().isEmpty()
-            || signUpDTO.getCpf().trim().isEmpty() || signUpDTO.getPassword().trim().isEmpty() || signUpDTO.getConfirmPassword().trim().isEmpty()) {
+            || signUpDTO.getPassword().trim().isEmpty() || signUpDTO.getPasswordConfirmation().trim().isEmpty()) {
             throw new IllegalArgumentException("Por favor, preencha todos os campos.");
         }
 
@@ -109,12 +109,8 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("Este e-mail já foi cadastrado.");
         }
 
-        if (userRepository.existsByCpf(signUpDTO.getCpf())) {
-            throw new IllegalArgumentException("Este CPF já foi cadastrado.");
-        }
-
-        if (!signUpDTO.getPassword().equals(signUpDTO.getConfirmPassword())) {
-            throw new IllegalArgumentException("As senhas estão diferentes.");
+        if (!signUpDTO.getPassword().equals(signUpDTO.getPasswordConfirmation())) {
+            throw new IllegalArgumentException("As senhas são diferentes.");
         }
 
         User userModel = new User();
@@ -122,7 +118,6 @@ public class UserServiceImpl implements UserService {
         userModel.setUsername(signUpDTO.getUsername());
         userModel.setFullName(signUpDTO.getFullName());
         userModel.setEmail(signUpDTO.getEmail());
-        userModel.setCpf(signUpDTO.getCpf());
 
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         userModel.setPassword(bCryptPasswordEncoder.encode(signUpDTO.getPassword()));
@@ -154,7 +149,9 @@ public class UserServiceImpl implements UserService {
 
         userModel.setUsername(updateUserDTO.getUsername());
         userModel.setEmail(updateUserDTO.getEmail());
-        userModel.setPassword(updateUserDTO.getPassword());
+
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        userModel.setPassword(bCryptPasswordEncoder.encode(updateUserDTO.getPassword()));
 
         userRepository.save(userModel);
     }
