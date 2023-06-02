@@ -1,5 +1,7 @@
 package com.api.bompreparo.domain.models;
 
+import com.api.bompreparo.domain.models.enums.Category;
+import com.api.bompreparo.domain.models.enums.Difficulty;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
@@ -21,6 +23,12 @@ public class Recipe {
     private String description;
     private String preparation;
     private Boolean isPrivate;
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
+    @Enumerated(EnumType.STRING)
+    private Difficulty difficulty;
 
     @OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER)
     private List<Image> images;

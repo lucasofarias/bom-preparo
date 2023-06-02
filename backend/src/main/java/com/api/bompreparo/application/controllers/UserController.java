@@ -1,6 +1,8 @@
 package com.api.bompreparo.application.controllers;
 
 import com.api.bompreparo.domain.models.User;
+import com.api.bompreparo.domain.models.dtos.SignUpDTO;
+import com.api.bompreparo.domain.models.dtos.UpdateUserDTO;
 import com.api.bompreparo.domain.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -83,10 +85,10 @@ public class UserController {
         }
     }
 
-    @DeleteMapping(value = "/delete-user")
-    public ResponseEntity<Object> deleteUser(@RequestParam(value = "userId") UUID userId) {
+    @DeleteMapping(value = "/delete-account")
+    public ResponseEntity<Object> deleteAccount(@RequestParam(value = "userId") UUID userId) {
         try {
-            userService.deleteUser(userId);
+            userService.deleteAccount(userId);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
 
@@ -95,10 +97,10 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "/get-user")
-    public ResponseEntity<Object> getUser(@RequestParam(value = "userId") UUID userId) {
+    @GetMapping(value = "/get-user-profile")
+    public ResponseEntity<Object> getUserProfile(@RequestParam(value = "userId") UUID userId) {
         try {
-            return ResponseEntity.status(HttpStatus.FOUND).body(userService.getUser(userId));
+            return ResponseEntity.status(HttpStatus.FOUND).body(userService.getUserProfile(userId));
         }
 
         catch (Exception ex) {
@@ -106,21 +108,11 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "/list-users")
-    public ResponseEntity<Object> listUsers() {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(userService.listUsers());
-        }
-
-        catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ex.getMessage());
-        }
-    }
-
     @PostMapping(value = "/sign-up")
-    public ResponseEntity<Object> signUp(@RequestBody User user) {
+    public ResponseEntity<Object> signUp(@RequestBody SignUpDTO signUpDTO) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(userService.signUp(user));
+            userService.signUp(signUpDTO);
+            return ResponseEntity.status(HttpStatus.OK).build();
         }
 
         catch (Exception ex) {
@@ -128,10 +120,10 @@ public class UserController {
         }
     }
 
-    @PutMapping(value = "/update-user")
-    public ResponseEntity<Object> updateUser(@RequestBody User user) {
+    @PutMapping(value = "/update-account")
+    public ResponseEntity<Object> updateAccount(@RequestBody UpdateUserDTO updateUserDTO) {
         try {
-            userService.updateUser(user);
+            userService.updateAccount(updateUserDTO);
             return ResponseEntity.status(HttpStatus.OK).build();
         }
 

@@ -9,8 +9,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 
-import java.util.UUID;
-
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
 public class Role implements GrantedAuthority {

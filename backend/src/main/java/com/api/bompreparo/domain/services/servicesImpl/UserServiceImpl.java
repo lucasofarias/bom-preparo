@@ -4,13 +4,19 @@ import com.api.bompreparo.data.repositories.RoleRepository;
 import com.api.bompreparo.data.repositories.UserRepository;
 import com.api.bompreparo.domain.models.User;
 import com.api.bompreparo.domain.models.Role;
+import com.api.bompreparo.domain.models.dtos.SignUpDTO;
+import com.api.bompreparo.domain.models.dtos.UpdateUserDTO;
+import com.api.bompreparo.domain.models.dtos.UserDTO;
 import com.api.bompreparo.domain.services.UserService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -60,83 +66,95 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(UUID userId) {
+    @Transactional
+    public void deleteAccount(UUID userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("O usuário não foi encontrado."));
+
+        if (!user.getId().equals(this.getCurrentUser().getUserId())) {
+            throw new IllegalArgumentException("Não é possível deletar a conta de outros usuários.");
+        }
 
         userRepository.deleteById(userId);
     }
 
     @Override
-    public User getUser(UUID userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("O usuário não foi encontrado."));
+    public UserDTO getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = (User) authentication.getPrincipal();
+
+        return UserDTO.toDTO(userRepository.findById(currentUser.getId())
+                .orElseThrow(() -> new IllegalArgumentException("O usuário não foi encontrado.")));
     }
 
     @Override
-    public List<User> listUsers() {
-        List<User> usersList = userRepository.findAll();
-
-        if (usersList.isEmpty()) {
-            throw new IllegalArgumentException("Nenhum usuário foi encontrado.");
-        }
-
-        return usersList;
+    public UserDTO getUserProfile(UUID userId) {
+        return UserDTO.toDTO(userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("O usuário não foi encontrado.")));
     }
 
     @Override
-    public User signUp(User user) {
-        if (user.getUsername().trim().isEmpty() || user.getFullName().trim().isEmpty() || user.getEmail().trim().isEmpty()
-            || user.getCpf().trim().isEmpty() || user.getPassword().trim().isEmpty()) {
+    @Transactional
+    public void signUp(SignUpDTO signUpDTO) {
+        if (signUpDTO.getUsername().trim().isEmpty() || signUpDTO.getFullName().trim().isEmpty() || signUpDTO.getEmail().trim().isEmpty()
+            || signUpDTO.getCpf().trim().isEmpty() || signUpDTO.getPassword().trim().isEmpty() || signUpDTO.getConfirmPassword().trim().isEmpty()) {
             throw new IllegalArgumentException("Por favor, preencha todos os campos.");
         }
 
-        if (userRepository.existsByUsername(user.getUsername())) {
+        if (userRepository.existsByUsername(signUpDTO.getUsername())) {
             throw new IllegalArgumentException("Este nome de usuário já foi cadastrado.");
         }
 
-        if (userRepository.existsByEmail(user.getEmail())) {
+        if (userRepository.existsByEmail(signUpDTO.getEmail())) {
             throw new IllegalArgumentException("Este e-mail já foi cadastrado.");
         }
 
-        if (userRepository.existsByCpf(user.getCpf())) {
+        if (userRepository.existsByCpf(signUpDTO.getCpf())) {
             throw new IllegalArgumentException("Este CPF já foi cadastrado.");
+        }
+
+        if (!signUpDTO.getPassword().equals(signUpDTO.getConfirmPassword())) {
+            throw new IllegalArgumentException("As senhas estão diferentes.");
         }
 
         User userModel = new User();
 
-        userModel.setUsername(user.getUsername());
-        userModel.setFullName(user.getFullName());
-        userModel.setEmail(user.getEmail());
-        userModel.setCpf(user.getCpf());
+        userModel.setUsername(signUpDTO.getUsername());
+        userModel.setFullName(signUpDTO.getFullName());
+        userModel.setEmail(signUpDTO.getEmail());
+        userModel.setCpf(signUpDTO.getCpf());
 
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        userModel.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userModel.setPassword(bCryptPasswordEncoder.encode(signUpDTO.getPassword()));
 
         Role roleUser = roleRepository.findByName("ROLE_USER");
         userModel.setRoles(List.of(roleUser));
 
-        userModel = userRepository.save(userModel);
-
-        return userModel;
+        userRepository.save(userModel);
     }
 
     @Override
-    public void updateUser(User user) {
-        if (user.getId().toString().trim().isEmpty() || user.getUsername().trim().isEmpty() || user.getEmail().trim().isEmpty() || user.getPassword().trim().isEmpty()) {
+    @Transactional
+    public void updateAccount(UpdateUserDTO updateUserDTO) {
+        if (updateUserDTO.getUserId().toString().trim().isEmpty() || updateUserDTO.getUsername().trim().isEmpty()
+                || updateUserDTO.getEmail().trim().isEmpty() || updateUserDTO.getPassword().trim().isEmpty()) {
             throw new IllegalArgumentException("Por favor, preencha todos os campos.");
         }
 
-        User userModel = userRepository.findById(user.getId())
+        User userModel = userRepository.findById(updateUserDTO.getUserId())
                 .orElseThrow(() -> new IllegalArgumentException("O usuário não foi encontrado."));
 
-        if (!user.getUsername().equals(userModel.getUsername()) && userRepository.existsByUsername(user.getUsername())) {
+        if (!userModel.getId().equals(this.getCurrentUser().getUserId())) {
+            throw new IllegalArgumentException("Não é possível alterar os dados da conta de um outro usuário.");
+        }
+
+        if (!updateUserDTO.getUsername().equals(userModel.getUsername()) && userRepository.existsByUsername(updateUserDTO.getUsername())) {
             throw new IllegalArgumentException("Este nome de usuário já está sendo utilizado.");
         }
 
-        userModel.setUsername(user.getUsername());
-        userModel.setEmail(user.getEmail());
-        userModel.setPassword(user.getPassword());
+        userModel.setUsername(updateUserDTO.getUsername());
+        userModel.setEmail(updateUserDTO.getEmail());
+        userModel.setPassword(updateUserDTO.getPassword());
 
         userRepository.save(userModel);
     }
