@@ -20,7 +20,7 @@ public class Recipe {
     private String name;
     private String description;
     private String preparation;
-    private boolean isPrivate;
+    private Boolean isPrivate;
 
     @OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER)
     private List<Image> images;

@@ -57,7 +57,7 @@ public class ImageServiceImpl implements ImageService {
     public void uploadImage(MultipartFile imageFile, UUID recipeId) throws IOException {
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new IllegalArgumentException("A receita não foi encontrada."));
-        
+
         Image image = imageRepository.save(Image.builder()
                 .type(imageFile.getContentType())
                 .data(ImageUtil.compressImage(imageFile.getBytes()))

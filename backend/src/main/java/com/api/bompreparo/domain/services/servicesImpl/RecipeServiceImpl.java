@@ -54,7 +54,7 @@ public class RecipeServiceImpl implements RecipeService {
         recipeModel.setName(recipe.getName());
         recipeModel.setDescription(recipe.getDescription());
         recipeModel.setPreparation(recipe.getPreparation());
-        recipeModel.setPrivate(recipe.isPrivate());
+        recipeModel.setIsPrivate(recipe.getIsPrivate());
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User currentUser = (User) authentication.getPrincipal();
