@@ -1,5 +1,6 @@
 package com.api.bompreparo.domain.services;
 
+import com.api.bompreparo.domain.models.Ingredient;
 import com.api.bompreparo.domain.models.Recipe;
 import com.api.bompreparo.domain.models.enums.Category;
 
@@ -21,5 +22,6 @@ public interface RecipeService {
     List<Recipe> listRecipes();
     List<Recipe> listRecipesByUser(UUID userId);
     List<Recipe> listRecipesByCategory(Category category);
+    List<Recipe> listRecipesByIngredients(List<Ingredient> ingredients);
 
 }

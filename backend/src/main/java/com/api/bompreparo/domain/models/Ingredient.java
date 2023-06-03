@@ -16,5 +16,6 @@ public class Ingredient {
     @Id @GeneratedValue
     private UUID id;
     private String name;
+    private String description;
 
 }

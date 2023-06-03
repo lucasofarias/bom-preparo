@@ -2,6 +2,7 @@ package com.api.bompreparo.domain.services.servicesImpl;
 
 import com.api.bompreparo.data.repositories.RecipeRepository;
 import com.api.bompreparo.data.repositories.UserRepository;
+import com.api.bompreparo.domain.models.Ingredient;
 import com.api.bompreparo.domain.models.Recipe;
 import com.api.bompreparo.domain.models.User;
 import com.api.bompreparo.domain.models.enums.Category;
@@ -162,6 +163,11 @@ public class RecipeServiceImpl implements RecipeService {
         }
 
         return recipeList;
+    }
+
+    @Override
+    public List<Recipe> listRecipesByIngredients(List<Ingredient> ingredients) {
+        return null;
     }
 
 }
