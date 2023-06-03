@@ -33,14 +33,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User create(User obj) {
+    public void create(User obj) {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         obj.setPassword(bCryptPasswordEncoder.encode(obj.getPassword()));
 
         Role roleUser = roleRepository.findByName("ROLE_USER");
         obj.setRoles(List.of(roleUser));
 
-        return userRepository.save(obj);
+        userRepository.save(obj);
     }
 
     @Override

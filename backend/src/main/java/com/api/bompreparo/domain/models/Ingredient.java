@@ -1,8 +1,6 @@
 package com.api.bompreparo.domain.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,5 +15,9 @@ public class Ingredient {
     private UUID id;
     private String name;
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "creator_user_id")
+    private User creatorUser;
 
 }

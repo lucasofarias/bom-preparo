@@ -4,6 +4,7 @@ import com.api.bompreparo.domain.services.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +21,7 @@ public class ImageController {
         this.imageService = imageService;
     }
 
+    @Secured({ "ROLE_ADMIN" })
     @PostMapping(value = "/create")
     public ResponseEntity<Object> create(@RequestParam(value = "obj") MultipartFile obj, @RequestParam(value = "id") UUID id) {
         try {
@@ -32,6 +34,7 @@ public class ImageController {
         }
     }
 
+    @Secured({ "ROLE_ADMIN" })
     @DeleteMapping(value = "/delete")
     public ResponseEntity<Object> delete(@RequestParam(value = "id") UUID id) {
         try {

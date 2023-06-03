@@ -5,6 +5,7 @@ import com.api.bompreparo.domain.services.IngredientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -20,6 +21,7 @@ public class IngredientController {
         this.ingredientService = ingredientService;
     }
 
+    @Secured({ "ROLE_ADMIN" })
     @PostMapping(value = "/create")
     public ResponseEntity<Object> create(@RequestBody Ingredient obj) {
         try {
@@ -32,6 +34,7 @@ public class IngredientController {
         }
     }
 
+    @Secured({ "ROLE_ADMIN" })
     @GetMapping(value = "/read")
     public ResponseEntity<Object> read(@RequestParam(value = "id") UUID id) {
         try {
@@ -43,6 +46,7 @@ public class IngredientController {
         }
     }
 
+    @Secured({ "ROLE_ADMIN" })
     @PutMapping(value = "/update")
     public ResponseEntity<Object> update(@RequestBody Ingredient obj) {
         try {
@@ -55,6 +59,7 @@ public class IngredientController {
         }
     }
 
+    @Secured({ "ROLE_ADMIN" })
     @DeleteMapping(value = "/delete")
     public ResponseEntity<Object> delete(@RequestParam(value = "id") UUID id) {
         try {
@@ -67,6 +72,7 @@ public class IngredientController {
         }
     }
 
+    @Secured({ "ROLE_ADMIN" })
     @GetMapping(value = "/list")
     public ResponseEntity<Object> list() {
         try {
@@ -75,6 +81,18 @@ public class IngredientController {
 
         catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ex.getMessage());
+        }
+    }
+
+    @PostMapping(value = "/add-ingredient-to-pantry")
+    public ResponseEntity<Object> addIngredientToPantry(@RequestParam(value = "ingredientId") UUID ingredientId) {
+        try {
+            ingredientService.addIngredientToPantry(ingredientId);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+
+        catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
     }
 
@@ -101,30 +119,6 @@ public class IngredientController {
         }
     }
 
-    @PutMapping(value = "/update-ingredient")
-    public ResponseEntity<Object> updateIngredient(@RequestBody Ingredient ingredient) {
-        try {
-            ingredientService.updateIngredient(ingredient);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
-
-        catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-        }
-    }
-
-    @DeleteMapping(value = "/delete-ingredient")
-    public ResponseEntity<Object> deleteIngredient(@RequestParam(value = "ingredientId") UUID ingredientId) {
-        try {
-            ingredientService.deleteIngredient(ingredientId);
-            return ResponseEntity.status(HttpStatus.OK).build();
-        }
-
-        catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-        }
-    }
-
     @GetMapping(value = "/list-ingredients")
     public ResponseEntity<Object> listIngredients() {
         try {
@@ -136,14 +130,26 @@ public class IngredientController {
         }
     }
 
-    @GetMapping(value = "/list-ingredients-by-user")
-    public ResponseEntity<Object> listIngredientsByUser(@RequestParam(value = "userId") UUID userId) {
+    @GetMapping(value = "/list-ingredients-by-current-user")
+    public ResponseEntity<Object> listIngredientsByCurrentUser() {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(ingredientService.listIngredientsByUser(userId));
+            return ResponseEntity.status(HttpStatus.OK).body(ingredientService.listIngredientsByCurrentUser());
         }
 
         catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.NO_CONTENT).body(ex.getMessage());
+        }
+    }
+
+    @DeleteMapping(value = "/remove-ingredient-from-pantry")
+    public ResponseEntity<Object> removeIngredientFromPantry(@RequestParam(value = "ingredientId") UUID ingredientId) {
+        try {
+            ingredientService.removeIngredientFromPantry(ingredientId);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+
+        catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
         }
     }
 

@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public interface RecipeService {
 
-    Recipe create(Recipe obj);
+    void create(Recipe obj);
     Recipe read(UUID id);
     void update(Recipe obj);
     void delete(UUID id);

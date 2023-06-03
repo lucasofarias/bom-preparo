@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface UserService {
 
-    User create(User obj);
+    void create(User obj);
     User read(UUID id);
     void update(User obj);
     void delete(UUID id);

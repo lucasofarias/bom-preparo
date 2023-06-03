@@ -6,6 +6,7 @@ import com.api.bompreparo.domain.services.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -21,6 +22,7 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
+    @Secured({ "ROLE_ADMIN" })
     @PostMapping(value = "/create")
     public ResponseEntity<Object> create(@RequestBody Recipe obj) {
         try {
@@ -33,6 +35,7 @@ public class RecipeController {
         }
     }
 
+    @Secured({ "ROLE_ADMIN" })
     @DeleteMapping(value = "/delete")
     public ResponseEntity<Object> delete(@RequestParam(value = "id") UUID id) {
         try {
@@ -45,6 +48,7 @@ public class RecipeController {
         }
     }
 
+    @Secured({ "ROLE_ADMIN" })
     @GetMapping(value = "/read")
     public ResponseEntity<Object> read(@RequestParam(value = "id") UUID id) {
         try {
@@ -56,6 +60,7 @@ public class RecipeController {
         }
     }
 
+    @Secured({ "ROLE_ADMIN" })
     @GetMapping(value = "/list")
     public ResponseEntity<Object> list() {
         try {
@@ -67,6 +72,7 @@ public class RecipeController {
         }
     }
 
+    @Secured({ "ROLE_ADMIN" })
     @PutMapping(value = "/update")
     public ResponseEntity<Object> update(@RequestBody Recipe obj) {
         try {
