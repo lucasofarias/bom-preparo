@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -29,28 +28,19 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image create(Image obj) {
-        return null;
-    }
+    public void create(MultipartFile obj, UUID recipeId) throws IOException {
+        Recipe recipe = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new IllegalArgumentException("Receita não encontrada."));
 
-    @Override
-    public Image read(UUID id) {
-        return null;
-    }
-
-    @Override
-    public void update(Image obj) {
-
+        Image image = imageRepository.save(Image.builder()
+                .type(obj.getContentType())
+                .data(ImageUtil.compressImage(obj.getBytes()))
+                .recipe(recipe).build());
     }
 
     @Override
     public void delete(UUID id) {
 
-    }
-
-    @Override
-    public List<Image> list() {
-        return null;
     }
 
     @Override
@@ -69,23 +59,11 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public Image getImage(UUID imageId) {
-        return null;
-    }
-
-    @Override
-    public void updateImage(Image image) {
-
-    }
-
-    @Override
     public void deleteImage(UUID imageId) {
+        imageRepository.findById(imageId)
+                        .orElseThrow(() -> new IllegalArgumentException("A imagem não foi encontrada."));
 
-    }
-
-    @Override
-    public List<Image> listImages() {
-        return null;
+        imageRepository.deleteById(imageId);
     }
 
 }

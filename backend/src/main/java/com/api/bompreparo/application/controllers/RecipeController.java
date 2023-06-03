@@ -21,6 +21,64 @@ public class RecipeController {
         this.recipeService = recipeService;
     }
 
+    @PostMapping(value = "/create")
+    public ResponseEntity<Object> create(@RequestBody Recipe obj) {
+        try {
+            recipeService.create(obj);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
+
+        catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
+    }
+
+    @DeleteMapping(value = "/delete")
+    public ResponseEntity<Object> delete(@RequestParam(value = "id") UUID id) {
+        try {
+            recipeService.delete(id);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+
+        catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
+    }
+
+    @GetMapping(value = "/read")
+    public ResponseEntity<Object> read(@RequestParam(value = "id") UUID id) {
+        try {
+            return ResponseEntity.status(HttpStatus.FOUND).body(recipeService.read(id));
+        }
+
+        catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        }
+    }
+
+    @GetMapping(value = "/list")
+    public ResponseEntity<Object> list() {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(recipeService.list());
+        }
+
+        catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
+    }
+
+    @PutMapping(value = "/update")
+    public ResponseEntity<Object> update(@RequestBody Recipe obj) {
+        try {
+            recipeService.update(obj);
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+
+        catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
+    }
+
     @PostMapping(value = "/create-recipe")
     public ResponseEntity<Object> createRecipe(@RequestBody Recipe recipe) {
         try {
@@ -42,6 +100,17 @@ public class RecipeController {
 
         catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
+    }
+
+    @GetMapping(value = "/get-recipe")
+    public ResponseEntity<Object> getRecipe(@RequestParam(value = "recipeId") UUID recipeId) {
+        try {
+            return ResponseEntity.status(HttpStatus.FOUND).body(recipeService.getRecipe(recipeId));
+        }
+
+        catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
     }
 
@@ -75,17 +144,6 @@ public class RecipeController {
 
         catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-        }
-    }
-
-    @GetMapping(value = "/get-recipe")
-    public ResponseEntity<Object> getRecipe(@RequestParam(value = "recipeId") UUID recipeId) {
-        try {
-            return ResponseEntity.status(HttpStatus.FOUND).body(recipeService.getRecipe(recipeId));
-        }
-
-        catch (Exception ex) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
         }
     }
 

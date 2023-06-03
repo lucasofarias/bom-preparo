@@ -34,35 +34,36 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Recipe create(Recipe obj) {
-        return null;
+        return recipeRepository.save(obj);
     }
 
     @Override
     public Recipe read(UUID id) {
-        return null;
+        return recipeRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("ID não encontrado."));
     }
 
     @Override
     public void update(Recipe obj) {
-
+        recipeRepository.save(obj);
     }
 
     @Override
     public void delete(UUID id) {
-
+        recipeRepository.deleteById(id);
     }
 
     @Override
     public List<Recipe> list() {
-        return null;
+        return recipeRepository.findAll();
     }
 
     @Override
     @Transactional
     public void createRecipe(Recipe recipe) {
         if (recipe.getName().trim().isEmpty() || recipe.getDescription().trim().isEmpty()
-                || recipe.getPreparation().trim().isEmpty() || recipe.getCategory().toString().trim().isEmpty()
-                || recipe.getDifficulty().toString().trim().isEmpty() || recipe.getIngredients().isEmpty()
+                || recipe.getPreparation().trim().isEmpty() || recipe.getCategory() == null
+                || recipe.getDifficulty() == null || recipe.getIngredients().isEmpty()
                 || recipe.getIsPrivate().toString().trim().isEmpty()) {
             throw new IllegalArgumentException("Por favor, preencha todos os campos.");
         }
@@ -76,6 +77,7 @@ public class RecipeServiceImpl implements RecipeService {
         recipeModel.setIngredients(recipe.getIngredients());
         recipeModel.setCategory(recipe.getCategory());
         recipeModel.setDifficulty(recipe.getDifficulty());
+        recipeModel.setImages(recipe.getImages());
         recipeModel.setCreatorUser(this.userService.getCurrentUser());
 
         recipeRepository.save(recipeModel);
