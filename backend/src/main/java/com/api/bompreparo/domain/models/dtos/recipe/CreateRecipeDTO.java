@@ -21,7 +21,7 @@ public class CreateRecipeDTO {
     private String description;
     private String preparation;
     private Boolean isPrivate;
-    private Category category;
+    private List<Category> categories;
     private Difficulty difficulty;
     private List<RecipeIngredientDTO> recipeIngredients;
     private List<Image> images;

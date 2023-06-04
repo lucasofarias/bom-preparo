@@ -10,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/recipe")
 public class RecipeController {
@@ -141,10 +143,10 @@ public class RecipeController {
         }
     }
 
-    @GetMapping(value = "/list-recipes-by-category")
-    public ResponseEntity<Object> listRecipesByCategory(@RequestParam(value = "category") Category category) {
+    @GetMapping(value = "/list-recipes-by-categories")
+    public ResponseEntity<Object> listRecipesByCategory(@RequestParam(value = "categories") List<Long> categoriesId) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(recipeService.listRecipesByCategory(category));
+            return ResponseEntity.status(HttpStatus.OK).body(recipeService.listRecipesByCategories(categoriesId));
         }
 
         catch (Exception ex) {

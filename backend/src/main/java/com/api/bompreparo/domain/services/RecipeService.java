@@ -19,8 +19,8 @@ public interface RecipeService {
     void updateRecipe(Recipe recipe);
     void deleteRecipe(Long recipeId);
     List<Recipe> listRecipes();
-    List<Recipe> listRecipesByCategory(Category category);
-    List<Recipe> listRecipesByIngredients(List<Long> ingredientIds);
+    List<Recipe> listRecipesByCategories(List<Long> categoriesId);
+    List<Recipe> listRecipesByIngredients(List<Long> ingredientsId);
     List<Recipe> listRecipesByUser(Long userId);
 
 }

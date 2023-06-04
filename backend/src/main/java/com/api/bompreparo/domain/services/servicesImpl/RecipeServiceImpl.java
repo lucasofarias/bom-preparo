@@ -74,7 +74,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Transactional
     public void createRecipe(CreateRecipeDTO createRecipeDTO) {
         if (createRecipeDTO.getName().trim().isEmpty() || createRecipeDTO.getDescription().trim().isEmpty()
-                || createRecipeDTO.getPreparation().trim().isEmpty() || createRecipeDTO.getCategory() == null
+                || createRecipeDTO.getPreparation().trim().isEmpty() || createRecipeDTO.getCategories().isEmpty()
                 || createRecipeDTO.getDifficulty() == null || createRecipeDTO.getRecipeIngredients().isEmpty()
                 || createRecipeDTO.getIsPrivate().toString().trim().isEmpty()) {
             throw new IllegalArgumentException("Por favor, preencha todos os campos.");
@@ -86,7 +86,7 @@ public class RecipeServiceImpl implements RecipeService {
         recipeModel.setDescription(createRecipeDTO.getDescription());
         recipeModel.setPreparation(createRecipeDTO.getPreparation());
         recipeModel.setIsPrivate(createRecipeDTO.getIsPrivate());
-        recipeModel.setCategory(createRecipeDTO.getCategory());
+        recipeModel.setCategories(createRecipeDTO.getCategories());
         recipeModel.setDifficulty(createRecipeDTO.getDifficulty());
         recipeModel.setImages(createRecipeDTO.getImages());
         recipeModel.setCreatorUser(this.userService.getCurrentUser());
@@ -124,7 +124,7 @@ public class RecipeServiceImpl implements RecipeService {
     @Transactional
     public void updateRecipe(Recipe recipe) {
         if (recipe.getName().trim().isEmpty() || recipe.getDescription().trim().isEmpty()
-                || recipe.getPreparation().trim().isEmpty() || recipe.getCategory().toString().trim().isEmpty()
+                || recipe.getPreparation().trim().isEmpty() || recipe.getCategories().isEmpty()
                 || recipe.getDifficulty().toString().trim().isEmpty() || recipe.getIngredients().isEmpty()
                 || recipe.getIsPrivate().toString().trim().isEmpty()) {
             throw new IllegalArgumentException("Por favor, preencha todos os campos.");
@@ -139,7 +139,7 @@ public class RecipeServiceImpl implements RecipeService {
         recipeModel.setName(recipe.getName());
         recipeModel.setDescription(recipe.getDescription());
         recipeModel.setPreparation(recipe.getPreparation());
-        recipeModel.setCategory(recipe.getCategory());
+        recipeModel.setCategories(recipe.getCategories());
         recipeModel.setDifficulty(recipe.getDifficulty());
         recipeModel.setIngredients(recipe.getIngredients());
         recipeModel.setIsPrivate(recipe.getIsPrivate());
@@ -185,8 +185,8 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<Recipe> listRecipesByCategory(Category category) {
-        List<Recipe> recipeList = recipeRepository.findByCategory(category);
+    public List<Recipe> listRecipesByCategories(List<Long> categoriesId) {
+        List<Recipe> recipeList = recipeRepository.findByCategories_IdIn(categoriesId);
 
         if (recipeList.isEmpty()) {
             throw new IllegalArgumentException("Nenhuma receita foi encontrada nessa categoria.");

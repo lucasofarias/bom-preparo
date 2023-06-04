@@ -23,13 +23,17 @@ public class Recipe {
     private String preparation;
     private Boolean isPrivate;
 
-    @Enumerated(EnumType.STRING)
-    private Category category;
+    @ManyToMany
+    @JoinTable(
+            name = "recipes_categories",
+            joinColumns = @JoinColumn(name = "recipe_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
+    private List<Category> categories;
 
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
 
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<RecipeIngredient> ingredients;
 
     @OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER)
