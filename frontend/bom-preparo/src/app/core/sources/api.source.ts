@@ -1,6 +1,8 @@
 export default {
+  auth: {
+    login: "/login"
+  },
   user: {
-    login: "/login",
-    signUp: "/user/sign-up"
+    signUp: "/user/sign-up",
   }
 }

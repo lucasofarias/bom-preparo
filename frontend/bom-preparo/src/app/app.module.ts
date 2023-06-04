@@ -10,19 +10,23 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor, HttpErrorInterceptor } from './core/helpers/interceptors';
 import { PublicRoutingComponent } from './presentation/pages/public-routing/public-routing.component';
 import { HomeComponent } from './presentation/pages/public-routing/home/home.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { SignUpComponent } from './presentation/pages/public-routing/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     PublicRoutingComponent,
-    HomeComponent
+    HomeComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

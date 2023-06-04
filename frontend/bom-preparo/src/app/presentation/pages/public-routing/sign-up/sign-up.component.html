@@ -3,16 +3,31 @@
     <div class="bp-login">
       <div class="bp-login-image">
         <img src="../../../../../assets/img/logo-chef.svg" class="bp-logo-chef img-fluid">
-        <img src="../../../../../assets/img/bom-preparo.svg" class="bp-bom-preparo img-fluid">
       </div>
 
       <div class="bp-login-form">
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="bp-form">
+        <form [formGroup]="signUpForm" (ngSubmit)="onSubmit()" class="bp-form">
           <div class="bp-login-form-title">
-            <h1>Entrar</h1>
+            <h1>Cadastrar</h1>
           </div>
 
           <div class="bp-form-group">
+            <div class="form-group">
+              <input type="text" formControlName="fullName" class="bp-login-form-input form-control" placeholder="Nome completo" [ngClass]="{ 'is-invalid': submitted && formField['fullName'].errors }" />
+
+              <div *ngIf="submitted && formField['fullName'].errors" class="invalid-feedback">
+                <div *ngIf="formField['fullName'].errors['required']">O nome completo é obrigatório</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <input type="email" formControlName="email" class="bp-login-form-input form-control" placeholder="E-mail" [ngClass]="{ 'is-invalid': submitted && formField['email'].errors }" />
+
+              <div *ngIf="submitted && formField['email'].errors" class="invalid-feedback">
+                <div *ngIf="formField['email'].errors['required']">O e-mail é obrigatório</div>
+              </div>
+            </div>
+
             <div class="form-group">
               <input type="text" formControlName="username" class="bp-login-form-input form-control" placeholder="Nome de usuário" [ngClass]="{ 'is-invalid': submitted && formField['username'].errors }" />
 
@@ -28,20 +43,28 @@
                 <div *ngIf="formField['password'].errors['required']">A senha é obrigatória</div>
               </div>
             </div>
+
+            <div class="form-group">
+              <input type="password" formControlName="passwordConfirmation" class="bp-login-form-input form-control" placeholder="Confirme a sua senha" [ngClass]="{ 'is-invalid': submitted && formField['passwordConfirmation'].errors }" />
+
+              <div *ngIf="submitted && formField['passwordConfirmation'].errors" class="invalid-feedback">
+                <div *ngIf="formField['passwordConfirmation'].errors['required']">A confirmação de senha é obrigatória</div>
+              </div>
+            </div>
           </div>
 
           <div class="d-grid bp-login-form-button">
             <button [disabled]="loading" class="btn">
               <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
-              Login
+              Cadastrar
             </button>
           </div>
 
           <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
 
           <div class="bp-do-not-have-account">
-            <p class="bp-do-not-have-account-text">Não possue conta?</p>
-            <p class="bp-do-not-have-account-link" routerLink="/sign-up">Cadastre-se!</p>
+            <p class="bp-do-not-have-account-text">Já possue conta?</p>
+            <p class="bp-do-not-have-account-link" routerLink="/login">Entrar</p>
           </div>
         </form>
       </div>

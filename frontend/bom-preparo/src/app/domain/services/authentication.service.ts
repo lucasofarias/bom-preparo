@@ -35,7 +35,7 @@ export class AuthenticationService {
   }
 
   login(username: string, password: string): Observable<SsoDTO> {
-    return this.httpClient.post<SsoDTO>(environment.apiUrl + endpoints.user.login, { username, password }).pipe(
+    return this.httpClient.post<SsoDTO>(environment.apiUrl + endpoints.auth.login, { username, password }).pipe(
       map(ssoDTO => {
         localStorage.setItem('currentUser', JSON.stringify(ssoDTO.currentUser));
         this.currentUserSubject.next(ssoDTO.currentUser);

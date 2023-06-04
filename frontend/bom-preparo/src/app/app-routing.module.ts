@@ -4,16 +4,17 @@ import { PublicRoutingComponent } from './presentation/pages/public-routing/publ
 import { LoginComponent } from './presentation/pages/public-routing/login/login.component';
 import { HomeComponent } from './presentation/pages/public-routing/home/home.component';
 import { AuthGuard } from './core/helpers/guards/auth.guard';
+import { SignUpComponent } from './presentation/pages/public-routing/sign-up/sign-up.component';
 
 const routes: Routes = [
   {
     path: '', component: PublicRoutingComponent, children: [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
+      { path: 'sign-up', component: SignUpComponent },
+      { path: 'home', component: HomeComponent }
     ]
-  },
-
-  { path: 'home', component: HomeComponent, canActivate: [AuthGuard] }
+  }
 ];
 
 @NgModule({

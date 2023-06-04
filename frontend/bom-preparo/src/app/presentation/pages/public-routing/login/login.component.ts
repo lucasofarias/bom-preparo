@@ -6,7 +6,9 @@ import { first } from 'rxjs/operators';
 import { AuthenticationService } from '../../../../domain/services';
 
 @Component({
-  templateUrl: 'login.component.html'
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
 
