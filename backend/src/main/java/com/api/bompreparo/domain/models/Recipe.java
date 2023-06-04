@@ -2,6 +2,8 @@ package com.api.bompreparo.domain.models;
 
 import com.api.bompreparo.domain.models.enums.Category;
 import com.api.bompreparo.domain.models.enums.Difficulty;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Data @NoArgsConstructor @AllArgsConstructor
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Recipe {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
