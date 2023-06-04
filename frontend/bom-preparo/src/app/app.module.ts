@@ -12,6 +12,7 @@ import { PublicRoutingComponent } from './presentation/pages/public-routing/publ
 import { HomeComponent } from './presentation/pages/public-routing/home/home.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SignUpComponent } from './presentation/pages/public-routing/sign-up/sign-up.component';
+import { NavbarComponent } from './presentation/shared/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { SignUpComponent } from './presentation/pages/public-routing/sign-up/sig
     LoginComponent,
     PublicRoutingComponent,
     HomeComponent,
-    SignUpComponent
+    SignUpComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,19 @@
+.np-navbar {
+  background-color: #FAA500;
+  box-shadow: 0 5px 7px rgba(0, 0, 0, 0.1);
+  margin-bottom: 3em;
+
+  .bp-navbar-img {
+    width: 150px;
+  }
+
+  button {
+    width: 45px;
+    border: 1px solid #FFFFFF;
+    padding: 0;
+
+    .bp-responsive-menu-img {
+      width: 45px;
+    }
+  }
+}
