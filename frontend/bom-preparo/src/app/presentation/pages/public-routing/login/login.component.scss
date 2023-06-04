@@ -50,7 +50,9 @@
 
   .bp-login {
     flex-direction: column;
-    height: 100vh;
+    min-height: 100vh;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .bp-login-image, .bp-login-form {
@@ -60,7 +62,10 @@
 
   .bp-login-image {
     border-radius: 0;
-    height: 50vh;
+  }
+
+  .bp-login-form {
+    height: 100%;
   }
 
   .bp-login-form-title {

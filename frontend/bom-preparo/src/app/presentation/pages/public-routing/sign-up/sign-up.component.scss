@@ -49,8 +49,10 @@
   }
 
   .bp-login {
-    flex-direction: column;
     height: 100vh;
+    flex-direction: column;
+    border-radius: 0;
+    box-shadow: none;
   }
 
   .bp-login-image, .bp-login-form {
@@ -60,11 +62,14 @@
 
   .bp-login-image {
     border-radius: 0;
-    height: 50vh;
 
     .bp-logo-chef {
-      width: 250px;
+      width: 150px;
     }
+  }
+
+  .bp-login-form {
+    height: 100%;
   }
 
   .bp-login-form-title {
