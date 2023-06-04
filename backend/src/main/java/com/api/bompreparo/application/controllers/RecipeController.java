@@ -1,6 +1,7 @@
 package com.api.bompreparo.application.controllers;
 
 import com.api.bompreparo.domain.models.Recipe;
+import com.api.bompreparo.domain.models.dtos.recipe.CreateRecipeDTO;
 import com.api.bompreparo.domain.models.enums.Category;
 import com.api.bompreparo.domain.services.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/recipe")
@@ -37,7 +36,7 @@ public class RecipeController {
 
     @Secured({ "ROLE_ADMIN" })
     @DeleteMapping(value = "/delete")
-    public ResponseEntity<Object> delete(@RequestParam(value = "id") UUID id) {
+    public ResponseEntity<Object> delete(@RequestParam(value = "id") Long id) {
         try {
             recipeService.delete(id);
             return ResponseEntity.status(HttpStatus.OK).build();
@@ -50,7 +49,7 @@ public class RecipeController {
 
     @Secured({ "ROLE_ADMIN" })
     @GetMapping(value = "/read")
-    public ResponseEntity<Object> read(@RequestParam(value = "id") UUID id) {
+    public ResponseEntity<Object> read(@RequestParam(value = "id") Long id) {
         try {
             return ResponseEntity.status(HttpStatus.FOUND).body(recipeService.read(id));
         }
@@ -86,9 +85,9 @@ public class RecipeController {
     }
 
     @PostMapping(value = "/create-recipe")
-    public ResponseEntity<Object> createRecipe(@RequestBody Recipe recipe) {
+    public ResponseEntity<Object> createRecipe(@RequestBody CreateRecipeDTO createRecipeDTO) {
         try {
-            recipeService.createRecipe(recipe);
+            recipeService.createRecipe(createRecipeDTO);
             return ResponseEntity.status(HttpStatus.CREATED).build();
         }
 
@@ -98,7 +97,7 @@ public class RecipeController {
     }
 
     @DeleteMapping(value = "/delete-recipe")
-    public ResponseEntity<Object> deleteRecipe(@RequestParam(value = "recipeId") UUID recipeId) {
+    public ResponseEntity<Object> deleteRecipe(@RequestParam(value = "recipeId") Long recipeId) {
         try {
             recipeService.deleteRecipe(recipeId);
             return ResponseEntity.status(HttpStatus.OK).build();
@@ -110,7 +109,7 @@ public class RecipeController {
     }
 
     @GetMapping(value = "/get-recipe")
-    public ResponseEntity<Object> getRecipe(@RequestParam(value = "recipeId") UUID recipeId) {
+    public ResponseEntity<Object> getRecipe(@RequestParam(value = "recipeId") Long recipeId) {
         try {
             return ResponseEntity.status(HttpStatus.FOUND).body(recipeService.getRecipe(recipeId));
         }
@@ -132,7 +131,7 @@ public class RecipeController {
     }
 
     @GetMapping(value = "/list-recipes-by-user")
-    public ResponseEntity<Object> listRecipesByUser(@RequestParam(value = "userId") UUID userId) {
+    public ResponseEntity<Object> listRecipesByUser(@RequestParam(value = "userId") Long userId) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(recipeService.listRecipesByUser(userId));
         }

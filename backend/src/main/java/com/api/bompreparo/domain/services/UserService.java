@@ -6,19 +6,18 @@ import com.api.bompreparo.domain.models.dtos.user.UpdateUserDTO;
 import com.api.bompreparo.domain.models.dtos.user.UserDTO;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface UserService {
 
     void create(User obj);
-    User read(UUID id);
+    User read(Long id);
     void update(User obj);
-    void delete(UUID id);
+    void delete(Long id);
     List<User> list();
 
-    void deleteAccount(UUID userId);
+    void deleteAccount(Long userId);
     User getCurrentUser();
-    UserDTO getUserProfile(UUID userId);
+    UserDTO getUser(Long userId);
     void signUp(SignUpDTO signUpDTO);
     void updateAccount(UpdateUserDTO updateUserDTO);
 

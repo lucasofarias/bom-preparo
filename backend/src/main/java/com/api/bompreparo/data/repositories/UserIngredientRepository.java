@@ -6,13 +6,12 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
-public interface UserIngredientRepository extends JpaRepository<UserIngredient, UUID> {
+public interface UserIngredientRepository extends JpaRepository<UserIngredient, Long> {
 
-    boolean existsByUser_IdAndIngredient_Id(UUID userId, UUID ingredientId);
-    List<UserIngredient> findByUser_Id(UUID userId);
-    Optional<UserIngredient> findByUser_IdAndIngredient_Id(UUID userId, UUID ingredientId);
+    boolean existsByUser_IdAndIngredient_Id(Long userId, Long ingredientId);
+    List<UserIngredient> findByUser_Id(Long userId);
+    Optional<UserIngredient> findByUser_IdAndIngredient_Id(Long userId, Long ingredientId);
 
 }

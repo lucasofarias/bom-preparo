@@ -1,19 +1,18 @@
 package com.api.bompreparo.domain.models;
 
+import com.api.bompreparo.domain.models.enums.MeasurementUnit;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.UUID;
 
 @Entity
 @Table(name = "recipes_ingredients")
 @Data @NoArgsConstructor @AllArgsConstructor
 public class RecipeIngredient {
 
-    @Id @GeneratedValue
-    private UUID id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "recipe_id")
@@ -23,10 +22,10 @@ public class RecipeIngredient {
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
-    private String quantity;
-
-    @OneToOne
-    @JoinColumn(name = "measurement_unit_id")
+    @Enumerated(EnumType.STRING)
     private MeasurementUnit measurementUnit;
+
+    private String quantity;
+    private Boolean isOptional;
 
 }

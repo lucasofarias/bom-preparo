@@ -8,8 +8,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping(value = "/image")
 public class ImageController {
@@ -23,7 +21,7 @@ public class ImageController {
 
     @Secured({ "ROLE_ADMIN" })
     @PostMapping(value = "/create")
-    public ResponseEntity<Object> create(@RequestParam(value = "obj") MultipartFile obj, @RequestParam(value = "id") UUID id) {
+    public ResponseEntity<Object> create(@RequestParam(value = "obj") MultipartFile obj, @RequestParam(value = "id") Long id) {
         try {
             this.imageService.create(obj, id);
             return ResponseEntity.status(HttpStatus.OK).build();
@@ -36,7 +34,7 @@ public class ImageController {
 
     @Secured({ "ROLE_ADMIN" })
     @DeleteMapping(value = "/delete")
-    public ResponseEntity<Object> delete(@RequestParam(value = "id") UUID id) {
+    public ResponseEntity<Object> delete(@RequestParam(value = "id") Long id) {
         try {
             this.imageService.delete(id);
             return ResponseEntity.status(HttpStatus.OK).build();
@@ -48,7 +46,7 @@ public class ImageController {
     }
 
     @PostMapping(value = "/upload-image")
-    public ResponseEntity<Object> uploadImage(@RequestParam(value = "imageFile") MultipartFile imageFile, @RequestParam(value = "recipeId") UUID recipeId) {
+    public ResponseEntity<Object> uploadImage(@RequestParam(value = "imageFile") MultipartFile imageFile, @RequestParam(value = "recipeId") Long recipeId) {
         try {
             this.imageService.uploadImage(imageFile, recipeId);
             return ResponseEntity.status(HttpStatus.OK).body("A imagem foi salva com sucesso.");
@@ -60,7 +58,7 @@ public class ImageController {
     }
 
     @DeleteMapping(value = "/delete-image")
-    public ResponseEntity<Object> deleteImage(@RequestParam(value = "imageId") UUID imageId) {
+    public ResponseEntity<Object> deleteImage(@RequestParam(value = "imageId") Long imageId) {
         try {
             this.imageService.deleteImage(imageId);
             return ResponseEntity.status(HttpStatus.OK).build();

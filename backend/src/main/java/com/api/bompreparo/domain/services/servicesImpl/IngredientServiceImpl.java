@@ -4,7 +4,6 @@ import com.api.bompreparo.data.repositories.IngredientRepository;
 import com.api.bompreparo.data.repositories.UserIngredientRepository;
 import com.api.bompreparo.data.repositories.UserRepository;
 import com.api.bompreparo.domain.models.Ingredient;
-import com.api.bompreparo.domain.models.User;
 import com.api.bompreparo.domain.models.UserIngredient;
 import com.api.bompreparo.domain.services.IngredientService;
 import com.api.bompreparo.domain.services.UserService;
@@ -13,8 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class IngredientServiceImpl implements IngredientService {
@@ -44,7 +41,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public Ingredient read(UUID id) {
+    public Ingredient read(Long id) {
         return ingredientRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("ID não encontrado."));
     }
@@ -55,7 +52,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public void delete(UUID id) {
+    public void delete(Long id) {
         ingredientRepository.deleteById(id);
     }
 
@@ -66,7 +63,7 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     @Transactional
-    public void addIngredientToPantry(UUID ingredientId) {
+    public void addIngredientToPantry(Long ingredientId) {
         Ingredient ingredient = ingredientRepository.findById(ingredientId)
                 .orElseThrow(() -> new IllegalArgumentException("O ingrediente não foi encontrado."));
 
@@ -85,7 +82,7 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     @Transactional
     public void createIngredient(Ingredient ingredient) {
-        if (ingredient.getName().trim().equals("") || ingredient.getDescription().trim().equals("")) {
+        if (ingredient.getName().trim().equals("")) {
             throw new IllegalArgumentException("Por favor, preencha todos os campos.");
         }
 
@@ -96,7 +93,6 @@ public class IngredientServiceImpl implements IngredientService {
         Ingredient ingredientModel = new Ingredient();
 
         ingredientModel.setName(ingredient.getName());
-        ingredientModel.setDescription(ingredientModel.getDescription());
 
         ingredientModel = ingredientRepository.save(ingredientModel);
 
@@ -109,7 +105,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public Ingredient getIngredient(UUID ingredientId) {
+    public Ingredient getIngredient(Long ingredientId) {
         return ingredientRepository.findById(ingredientId)
                 .orElseThrow(() -> new IllegalArgumentException("O ingrediente não foi encontrado."));
     }
@@ -138,7 +134,7 @@ public class IngredientServiceImpl implements IngredientService {
 
     @Override
     @Transactional
-    public void removeIngredientFromPantry(UUID ingredientId) {
+    public void removeIngredientFromPantry(Long ingredientId) {
         Ingredient ingredient = ingredientRepository.findById(ingredientId)
                 .orElseThrow(() -> new IllegalArgumentException("O ingrediente não foi encontrado."));
 

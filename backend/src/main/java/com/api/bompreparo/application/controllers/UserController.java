@@ -10,8 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -38,7 +36,7 @@ public class UserController {
 
     @Secured("ROLE_ADMIN")
     @GetMapping(value = "/read")
-    public ResponseEntity<Object> read(@RequestParam(value = "id") UUID id) {
+    public ResponseEntity<Object> read(@RequestParam(value = "id") Long id) {
         try {
             return ResponseEntity.status(HttpStatus.FOUND).body(userService.read(id));
         }
@@ -63,7 +61,7 @@ public class UserController {
 
     @Secured("ROLE_ADMIN")
     @DeleteMapping(value = "/delete")
-    public ResponseEntity<Object> delete(@RequestParam(value = "id") UUID id) {
+    public ResponseEntity<Object> delete(@RequestParam(value = "id") Long id) {
         try {
             userService.delete(id);
             return ResponseEntity.status(HttpStatus.OK).build();
@@ -87,7 +85,7 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/delete-account")
-    public ResponseEntity<Object> deleteAccount(@RequestParam(value = "userId") UUID userId) {
+    public ResponseEntity<Object> deleteAccount(@RequestParam(value = "userId") Long userId) {
         try {
             userService.deleteAccount(userId);
             return ResponseEntity.status(HttpStatus.OK).build();
@@ -98,10 +96,10 @@ public class UserController {
         }
     }
 
-    @GetMapping(value = "/get-user-profile")
-    public ResponseEntity<Object> getUserProfile(@RequestParam(value = "userId") UUID userId) {
+    @GetMapping(value = "/get-user")
+    public ResponseEntity<Object> getUser(@RequestParam(value = "userId") Long userId) {
         try {
-            return ResponseEntity.status(HttpStatus.FOUND).body(userService.getUserProfile(userId));
+            return ResponseEntity.status(HttpStatus.FOUND).body(userService.getUser(userId));
         }
 
         catch (Exception ex) {

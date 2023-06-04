@@ -16,7 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -44,7 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User read(UUID id) {
+    public User read(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("ID não encontrado."));
     }
@@ -55,7 +54,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(UUID id) {
+    public void delete(Long id) {
         userRepository.deleteById(id);
     }
 
@@ -66,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void deleteAccount(UUID userId) {
+    public void deleteAccount(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("O usuário não foi encontrado."));
 
@@ -87,7 +86,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO getUserProfile(UUID userId) {
+    public UserDTO getUser(Long userId) {
         return UserDTO.toDTO(userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("O usuário não foi encontrado.")));
     }

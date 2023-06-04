@@ -7,12 +7,10 @@ import lombok.NoArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
-import java.util.UUID;
-
 @Data @NoArgsConstructor @AllArgsConstructor
 public class UserDTO {
 
-    private UUID userId;
+    private Long userId;
     private String username;
     private String fullName;
     private String email;

@@ -3,21 +3,20 @@ package com.api.bompreparo.domain.services;
 import com.api.bompreparo.domain.models.Ingredient;
 
 import java.util.List;
-import java.util.UUID;
 
 public interface IngredientService {
 
     void create(Ingredient obj);
-    Ingredient read(UUID id);
+    Ingredient read(Long id);
     void update(Ingredient obj);
-    void delete(UUID id);
+    void delete(Long id);
     List<Ingredient> list();
 
-    void addIngredientToPantry(UUID ingredientId);
+    void addIngredientToPantry(Long ingredientId);
     void createIngredient(Ingredient ingredient);
-    Ingredient getIngredient(UUID ingredientId);
+    Ingredient getIngredient(Long ingredientId);
     List<Ingredient> listIngredients();
-    List<Ingredient> listIngredientsByCurrentUser(); // listar seus ingredientes
-    void removeIngredientFromPantry(UUID ingredientId);
+    List<Ingredient> listIngredientsByCurrentUser();
+    void removeIngredientFromPantry(Long ingredientId);
 
 }

@@ -8,8 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping(value = "ingredient")
 public class IngredientController {
@@ -36,7 +34,7 @@ public class IngredientController {
 
     @Secured({ "ROLE_ADMIN" })
     @GetMapping(value = "/read")
-    public ResponseEntity<Object> read(@RequestParam(value = "id") UUID id) {
+    public ResponseEntity<Object> read(@RequestParam(value = "id") Long id) {
         try {
             return ResponseEntity.status(HttpStatus.FOUND).body(ingredientService.read(id));
         }
@@ -61,7 +59,7 @@ public class IngredientController {
 
     @Secured({ "ROLE_ADMIN" })
     @DeleteMapping(value = "/delete")
-    public ResponseEntity<Object> delete(@RequestParam(value = "id") UUID id) {
+    public ResponseEntity<Object> delete(@RequestParam(value = "id") Long id) {
         try {
             ingredientService.delete(id);
             return ResponseEntity.status(HttpStatus.OK).build();
@@ -85,7 +83,7 @@ public class IngredientController {
     }
 
     @PostMapping(value = "/add-ingredient-to-pantry")
-    public ResponseEntity<Object> addIngredientToPantry(@RequestParam(value = "ingredientId") UUID ingredientId) {
+    public ResponseEntity<Object> addIngredientToPantry(@RequestBody Long ingredientId) {
         try {
             ingredientService.addIngredientToPantry(ingredientId);
             return ResponseEntity.status(HttpStatus.OK).build();
@@ -109,7 +107,7 @@ public class IngredientController {
     }
 
     @GetMapping(value = "/get-ingredient")
-    public ResponseEntity<Object> getIngredient(@RequestParam(value = "ingredientId") UUID ingredientId) {
+    public ResponseEntity<Object> getIngredient(@RequestParam(value = "ingredientId") Long ingredientId) {
         try {
             return ResponseEntity.status(HttpStatus.FOUND).body(ingredientService.getIngredient(ingredientId));
         }
@@ -142,7 +140,7 @@ public class IngredientController {
     }
 
     @DeleteMapping(value = "/remove-ingredient-from-pantry")
-    public ResponseEntity<Object> removeIngredientFromPantry(@RequestParam(value = "ingredientId") UUID ingredientId) {
+    public ResponseEntity<Object> removeIngredientFromPantry(@RequestBody Long ingredientId) {
         try {
             ingredientService.removeIngredientFromPantry(ingredientId);
             return ResponseEntity.status(HttpStatus.OK).build();
