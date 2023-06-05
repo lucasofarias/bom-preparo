@@ -2,9 +2,8 @@ package com.api.bompreparo.domain.models.dtos.recipe;
 
 import com.api.bompreparo.domain.models.Image;
 import com.api.bompreparo.domain.models.Recipe;
-import com.api.bompreparo.domain.models.dtos.ingredient.IngredientDTO;
 import com.api.bompreparo.domain.models.dtos.recipeIngredient.RecipeIngredientDTO;
-import com.api.bompreparo.domain.models.enums.Category;
+import com.api.bompreparo.domain.models.Category;
 import com.api.bompreparo.domain.models.enums.Difficulty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +23,7 @@ public class CreateRecipeDTO {
     private List<Category> categories;
     private Difficulty difficulty;
     private List<RecipeIngredientDTO> recipeIngredients;
-    private List<Image> images;
+    private Image image;
 
     public static CreateRecipeDTO toDTO(Recipe recipe) {
         ModelMapper modelMapper = new ModelMapper();

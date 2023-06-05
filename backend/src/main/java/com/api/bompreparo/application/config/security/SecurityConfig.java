@@ -45,6 +45,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests((authz) -> authz
                         .requestMatchers(HttpMethod.GET, "/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/user/sign-up").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/image/view-image").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/category/list-categories").permitAll()
                         .anyRequest().authenticated()
                 )
                 .cors().and().csrf().disable()

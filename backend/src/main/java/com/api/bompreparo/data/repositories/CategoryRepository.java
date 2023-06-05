@@ -1,6 +1,6 @@
 package com.api.bompreparo.data.repositories;
 
-import com.api.bompreparo.domain.models.enums.Category;
+import com.api.bompreparo.domain.models.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

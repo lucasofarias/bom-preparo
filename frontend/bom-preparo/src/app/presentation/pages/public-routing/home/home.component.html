@@ -1,4 +1,19 @@
-<div>
-  <app-navbar></app-navbar>
-</div>
+<app-navbar></app-navbar>
 
+<div class="container">
+  <section class="bp-section" *ngFor="let category of categories">
+    <ng-container *ngIf="category.recipes.length > 0">
+      <h2 class="bp-category-name">{{ category.name }}</h2>
+
+      <div class="bp-section-line"></div>
+
+      <div class="bp-recipes">
+        <div class="bp-recipe" *ngFor="let recipe of category.recipes" [routerLink]="['/view-recipe/', recipe.recipeId]">
+          <img height="250px" [src]="'http://localhost:8080/image/view-image?imageId=' + recipe.image.id" alt="">
+
+          <span>{{ recipe.name }}</span>
+        </div>
+      </div>
+    </ng-container>
+  </section>
+</div>

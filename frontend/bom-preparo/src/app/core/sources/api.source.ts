@@ -1,23 +1,17 @@
 export default {
+
   auth: {
     login: "/login"
   },
-  user: {
-    signUp: "/user/sign-up",
-    deleteAccount: "/user/delete-account",
-    updateAccount: "/user/update-account",
-    getUser: "/user/get-user",
+
+  category: {
+    listCategories: "/category/list-categories"
   },
-  recipe: {
-    createRecipe: "/recipe/create-recipe",
-    deleteRecipe: "/recipe/delete-recipe",
-    getRecipe: "/recipe/get-recipe",
-    listRecipes: "/recipe/list-recipes",
-    listRecipesByCategories: "/recipe/list-recipes-by-categories",
-    listRecipesByIngredients: "/recipe/list-recipes-by-ingredients",
-    listRecipesByUser: "/recipe/list-recipes-by-user",
-    updateRecipe: "/recipe/update-recipe"
+
+  image: {
+    viewImage: "/image/view-image"
   },
+
   ingredient: {
     createIngredient: "/ingredient/create-ingredient",
     addIngredientFromPantry: "/ingredient/add-ingredient-to-pantry",
@@ -25,5 +19,25 @@ export default {
     getIngredient: "/ingredient/get-ingredient",
     listIngredients: "/ingredient/list-ingredients",
     listIngredientsByCurrentUser: "/ingredient/list-ingredients-by-current-user",
+  },
+
+  recipe: {
+    createRecipe: "/recipe/create-recipe",
+    deleteRecipe: "/recipe/delete-recipe",
+    getRecipe: "/recipe/get-recipe",
+    listRecipes: "/recipe/list-recipes",
+    listRecipesByCategories: "/recipe/list-recipes-by-categories",
+    listRecipesByCategory: "/recipe/list-recipes-by-category",
+    listRecipesByIngredients: "/recipe/list-recipes-by-ingredients",
+    listRecipesByUser: "/recipe/list-recipes-by-user",
+    updateRecipe: "/recipe/update-recipe"
+  },
+
+  user: {
+    signUp: "/user/sign-up",
+    deleteAccount: "/user/delete-account",
+    updateAccount: "/user/update-account",
+    getUser: "/user/get-user",
   }
+
 }

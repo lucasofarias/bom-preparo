@@ -2,7 +2,6 @@ package com.api.bompreparo.application.controllers;
 
 import com.api.bompreparo.domain.models.Recipe;
 import com.api.bompreparo.domain.models.dtos.recipe.CreateRecipeDTO;
-import com.api.bompreparo.domain.models.enums.Category;
 import com.api.bompreparo.domain.services.RecipeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -113,7 +112,7 @@ public class RecipeController {
     @GetMapping(value = "/get-recipe")
     public ResponseEntity<Object> getRecipe(@RequestParam(value = "recipeId") Long recipeId) {
         try {
-            return ResponseEntity.status(HttpStatus.FOUND).body(recipeService.getRecipe(recipeId));
+            return ResponseEntity.status(HttpStatus.OK).body(recipeService.getRecipe(recipeId));
         }
 
         catch (Exception ex) {
@@ -144,9 +143,20 @@ public class RecipeController {
     }
 
     @GetMapping(value = "/list-recipes-by-categories")
-    public ResponseEntity<Object> listRecipesByCategory(@RequestParam(value = "categories") List<Long> categoriesId) {
+    public ResponseEntity<Object> listRecipesByCategories(@RequestParam(value = "categoriesId") List<Long> categoriesId) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(recipeService.listRecipesByCategories(categoriesId));
+        }
+
+        catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
+    }
+
+    @GetMapping(value = "/list-recipes-by-category")
+    public ResponseEntity<Object> listRecipesByCategory(@RequestParam(value = "categoryId") Long categoryId) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(recipeService.listRecipesByCategory(categoryId));
         }
 
         catch (Exception ex) {

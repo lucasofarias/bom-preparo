@@ -5,6 +5,7 @@ import { LoginComponent } from './presentation/pages/public-routing/login/login.
 import { HomeComponent } from './presentation/pages/public-routing/home/home.component';
 import { AuthGuard } from './core/helpers/guards/auth.guard';
 import { SignUpComponent } from './presentation/pages/public-routing/sign-up/sign-up.component';
+import { ViewRecipeComponent } from './presentation/pages/public-routing/view-recipe/view-recipe.component';
 
 const routes: Routes = [
   {
@@ -12,7 +13,8 @@ const routes: Routes = [
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       { path: 'sign-up', component: SignUpComponent },
-      { path: 'home', component: HomeComponent }
+      { path: 'home', component: HomeComponent },
+      { path: 'view-recipe/:id', component: ViewRecipeComponent },
     ]
   }
 ];

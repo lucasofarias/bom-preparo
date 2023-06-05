@@ -9,7 +9,7 @@ import com.api.bompreparo.domain.models.Recipe;
 import com.api.bompreparo.domain.models.RecipeIngredient;
 import com.api.bompreparo.domain.models.User;
 import com.api.bompreparo.domain.models.dtos.recipe.CreateRecipeDTO;
-import com.api.bompreparo.domain.models.enums.Category;
+import com.api.bompreparo.domain.models.dtos.recipe.RecipeDTO;
 import com.api.bompreparo.domain.services.RecipeService;
 import com.api.bompreparo.domain.services.UserService;
 import jakarta.transaction.Transactional;
@@ -88,7 +88,7 @@ public class RecipeServiceImpl implements RecipeService {
         recipeModel.setIsPrivate(createRecipeDTO.getIsPrivate());
         recipeModel.setCategories(createRecipeDTO.getCategories());
         recipeModel.setDifficulty(createRecipeDTO.getDifficulty());
-        recipeModel.setImages(createRecipeDTO.getImages());
+        recipeModel.setImage(createRecipeDTO.getImage());
         recipeModel.setCreatorUser(this.userService.getCurrentUser());
 
         recipeRepository.save(recipeModel);
@@ -115,9 +115,9 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Recipe getRecipe(Long recipeId) {
-        return recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new IllegalArgumentException("A receita não foi encontrada."));
+    public RecipeDTO getRecipe(Long recipeId) {
+        return RecipeDTO.toDTO(recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new IllegalArgumentException("A receita não foi encontrada.")));
     }
 
     @Override
@@ -130,7 +130,8 @@ public class RecipeServiceImpl implements RecipeService {
             throw new IllegalArgumentException("Por favor, preencha todos os campos.");
         }
 
-        Recipe recipeModel = this.getRecipe(recipe.getId());
+        Recipe recipeModel = recipeRepository.findById(recipe.getId())
+                .orElseThrow(() -> new IllegalArgumentException("A receita não foi encontrada."));
 
         if (!recipeModel.getCreatorUser().getId().equals(this.userService.getCurrentUser().getId())) {
             throw new IllegalArgumentException("Somente o criador da receita pode alterar ela.");
@@ -150,7 +151,8 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     @Transactional
     public void deleteRecipe(Long recipeId) {
-        Recipe recipe = this.getRecipe(recipeId);
+        Recipe recipe = recipeRepository.findById(recipeId)
+                .orElseThrow(() -> new IllegalArgumentException("A receita não foi encontrada."));
 
         if (!recipe.getCreatorUser().getId().equals(this.userService.getCurrentUser().getId())) {
             throw new IllegalArgumentException("Somente o criador da receita pode deletar ela.");
@@ -187,6 +189,17 @@ public class RecipeServiceImpl implements RecipeService {
     @Override
     public List<Recipe> listRecipesByCategories(List<Long> categoriesId) {
         List<Recipe> recipeList = recipeRepository.findByCategories_IdIn(categoriesId);
+
+        if (recipeList.isEmpty()) {
+            throw new IllegalArgumentException("Nenhuma receita foi encontrada nessa categoria.");
+        }
+
+        return recipeList;
+    }
+
+    @Override
+    public List<Recipe> listRecipesByCategory(Long categoryId) {
+        List<Recipe> recipeList = recipeRepository.findByCategories_Id(categoryId);
 
         if (recipeList.isEmpty()) {
             throw new IllegalArgumentException("Nenhuma receita foi encontrada nessa categoria.");

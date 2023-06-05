@@ -1,6 +1,5 @@
 package com.api.bompreparo.domain.services.servicesImpl;
 
-import com.api.bompreparo.application.util.ImageUtil;
 import com.api.bompreparo.data.repositories.ImageRepository;
 import com.api.bompreparo.data.repositories.RecipeRepository;
 import com.api.bompreparo.domain.models.Image;
@@ -8,9 +7,6 @@ import com.api.bompreparo.domain.models.Recipe;
 import com.api.bompreparo.domain.services.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
 
 @Service
 public class ImageServiceImpl implements ImageService {
@@ -27,40 +23,37 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
-    public void create(MultipartFile obj, Long recipeId) throws IOException {
-        Recipe recipe = recipeRepository.findById(recipeId)
-                .orElseThrow(() -> new IllegalArgumentException("Receita não encontrada."));
-
-        Image image = imageRepository.save(Image.builder()
-                .type(obj.getContentType())
-                .data(ImageUtil.compressImage(obj.getBytes()))
-                .recipe(recipe).build());
-    }
-
-    @Override
-    public void delete(Long id) {
-
-    }
-
-    @Override
-    public void uploadImage(MultipartFile imageFile, Long recipeId) throws IOException {
+    public void uploadImage(Image image, Long recipeId) {
         Recipe recipe = recipeRepository.findById(recipeId)
                 .orElseThrow(() -> new IllegalArgumentException("A receita não foi encontrada."));
 
-        Image image = imageRepository.save(Image.builder()
-                .type(imageFile.getContentType())
-                .data(ImageUtil.compressImage(imageFile.getBytes()))
-                .recipe(recipe).build());
+        Image imageModel = new Image();
+        imageModel.setData(image.getData());
+        imageModel.setRecipe(recipe);
 
-        if (image == null) {
-            throw new IllegalArgumentException("Ocorreu um erro ao salvar a imagem.");
-        }
+        imageModel = imageRepository.save(imageModel);
+
+        recipe.setImage(imageModel);
+
+        recipeRepository.save(recipe);
+    }
+
+    @Override
+    public Image viewImage(Long imageId) {
+        return imageRepository.findById(imageId)
+                .orElseThrow(() -> new IllegalArgumentException("A imagem não foi encontrada."));
     }
 
     @Override
     public void deleteImage(Long imageId) {
-        imageRepository.findById(imageId)
+        Image image = imageRepository.findById(imageId)
                         .orElseThrow(() -> new IllegalArgumentException("A imagem não foi encontrada."));
+
+        Recipe recipe = recipeRepository.findById(image.getRecipe().getId())
+                        .orElseThrow(() -> new IllegalArgumentException("A receita não foi encontrada."));
+
+        recipe.setImage(null);
+        recipeRepository.save(recipe);
 
         imageRepository.deleteById(imageId);
     }

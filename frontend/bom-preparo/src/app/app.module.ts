@@ -13,6 +13,7 @@ import { HomeComponent } from './presentation/pages/public-routing/home/home.com
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SignUpComponent } from './presentation/pages/public-routing/sign-up/sign-up.component';
 import { NavbarComponent } from './presentation/shared/navbar/navbar.component';
+import { ViewRecipeComponent } from './presentation/pages/public-routing/view-recipe/view-recipe.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { NavbarComponent } from './presentation/shared/navbar/navbar.component';
     PublicRoutingComponent,
     HomeComponent,
     SignUpComponent,
-    NavbarComponent
+    NavbarComponent,
+    ViewRecipeComponent
   ],
   imports: [
     BrowserModule,

@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor @AllArgsConstructor
 public class RecipeIngredientDTO {
 
-    private IngredientDTO ingredient;
+    private Ingredient ingredient;
     private String quantity;
     private MeasurementUnit measurementUnit;
     private Boolean isOptional;

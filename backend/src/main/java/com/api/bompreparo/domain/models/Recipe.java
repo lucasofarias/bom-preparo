@@ -1,6 +1,5 @@
 package com.api.bompreparo.domain.models;
 
-import com.api.bompreparo.domain.models.enums.Category;
 import com.api.bompreparo.domain.models.enums.Difficulty;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -36,8 +35,8 @@ public class Recipe {
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL)
     private List<RecipeIngredient> ingredients;
 
-    @OneToMany(mappedBy = "recipe", fetch = FetchType.EAGER)
-    private List<Image> images;
+    @OneToOne(cascade = CascadeType.ALL)
+    private Image image;
 
     @ManyToOne
     @JoinColumn(name = "creator_user_id")
