@@ -1,7 +1,33 @@
 <app-navbar></app-navbar>
 
 <div class="container">
-  <div class="bp-title">
-    {{ recipe.name }}
+  <div class="bp-recipe">
+    <div>
+      <h1 class="bp-recipe-name">{{ recipe.name }}</h1>
+      <img class="bp-recipe-image" [src]="'http://localhost:8080/image/view-image?imageId=' + recipe.image.imageId" alt="Recipe image">
+    </div>
+
+    <div>
+      <h3>Descrição</h3>
+
+      <p class="bp-recipe-description">{{ recipe.description }}</p>
+    </div>
+
+    <div>
+      <h3>Ingredientes</h3>
+
+      <p class="bp-ingredient" *ngFor="let ingredient of recipe.ingredients">
+        {{ ingredient.quantity }} {{ ingredient.measurementUnit }} de {{ ingredient.ingredient.name }}
+      </p>
+    </div>
+
+    <div>
+      <h3>Modo de preparo</h3>
+      <p class="bp-recipe-preparation">{{ recipe.preparation }}</p>
+    </div>
+
+    <div>
+      <p class="bp-created-by">Receita criada por: <span (click)="viewUser(recipe.creatorUser)">@{{ recipe.creatorUser.username }}</span></p>
+    </div>
   </div>
 </div>

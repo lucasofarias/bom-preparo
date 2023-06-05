@@ -7,6 +7,7 @@ import endpoints from "../../core/sources/api.source"
 import { environment } from "src/environments/environment";
 import { Recipe } from "src/app/domain/models";
 import { RecipeDTO } from "src/app/domain/models/dtos/recipe.dto";
+import { ListRecipeDTO } from "src/app/domain/models/dtos/list-recipe.dto";
 
 @Injectable({ providedIn: 'root' })
 export class RecipeRepository {
@@ -59,16 +60,16 @@ export class RecipeRepository {
     );
   }
 
-  listRecipesByIngredients(ingredientsId: number[]): Observable<Recipe[]> {
-    return this.httpClient.get<Recipe[]>(environment.apiUrl + endpoints.recipe.listRecipesByIngredients + "?ingredients=" + ingredientsId).pipe(
+  listRecipesByIngredients(ingredientsId: number[]): Observable<RecipeDTO[]> {
+    return this.httpClient.get<RecipeDTO[]>(environment.apiUrl + endpoints.recipe.listRecipesByIngredients + "?ingredientsId=" + ingredientsId).pipe(
       map((data) => {
         return data;
       })
     );
   }
 
-  listRecipesByUser(userId: number): Observable<Recipe[]> {
-    return this.httpClient.get<Recipe[]>(environment.apiUrl + endpoints.recipe.listRecipesByUser + "?userId=" + userId).pipe(
+  listRecipesByUser(userId: number): Observable<ListRecipeDTO[]> {
+    return this.httpClient.get<ListRecipeDTO[]>(environment.apiUrl + endpoints.recipe.listRecipesByUser + "?userId=" + userId).pipe(
       map((data) => {
         return data;
       })

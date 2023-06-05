@@ -4,6 +4,7 @@ import { CreateRecipeDTO } from "../models/dtos/create-recipe.dto";
 import { Recipe } from "../models";
 import { Injectable } from "@angular/core";
 import { RecipeDTO } from "../models/dtos/recipe.dto";
+import { ListRecipeDTO } from "../models/dtos/list-recipe.dto";
 
 @Injectable({ providedIn: 'root' })
 export class RecipeService {
@@ -50,7 +51,7 @@ export class RecipeService {
     );
   }
 
-  listRecipesByIngredients(ingredientsId: number[]): Observable<Recipe[]> {
+  listRecipesByIngredients(ingredientsId: number[]): Observable<RecipeDTO[]> {
     return this.listRecipesByIngredients(ingredientsId).pipe(
       map((data) => {
         return data;
@@ -58,7 +59,7 @@ export class RecipeService {
     );
   }
 
-  listRecipesByUser(userId: number): Observable<Recipe[]> {
+  listRecipesByUser(userId: number): Observable<ListRecipeDTO[]> {
     return this.recipeRepository.listRecipesByUser(userId).pipe(
       map((data) => {
         return data;

@@ -14,6 +14,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SignUpComponent } from './presentation/pages/public-routing/sign-up/sign-up.component';
 import { NavbarComponent } from './presentation/shared/navbar/navbar.component';
 import { ViewRecipeComponent } from './presentation/pages/public-routing/view-recipe/view-recipe.component';
+import { ViewUserComponent } from './presentation/pages/public-routing/view-user/view-user.component';
+import { ViewYourRecipesComponent } from './presentation/pages/view-your-recipes/view-your-recipes.component';
+import { NewRecipeComponent } from './presentation/pages/new-recipe/new-recipe.component';
+import { ExploreRecipesComponent } from './presentation/pages/public-routing/explore-recipes/explore-recipes.component';
+import { AddIngredientsToPantryComponent } from './presentation/pages/add-ingredients-to-pantry/add-ingredients-to-pantry.component';
+import { ViewPantryComponent } from './presentation/pages/view-pantry/view-pantry.component';
+import { ModalComponent } from './presentation/shared/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +30,14 @@ import { ViewRecipeComponent } from './presentation/pages/public-routing/view-re
     HomeComponent,
     SignUpComponent,
     NavbarComponent,
-    ViewRecipeComponent
+    ViewRecipeComponent,
+    ViewUserComponent,
+    ViewYourRecipesComponent,
+    NewRecipeComponent,
+    ExploreRecipesComponent,
+    AddIngredientsToPantryComponent,
+    ViewPantryComponent,
+    ModalComponent
   ],
   imports: [
     BrowserModule,

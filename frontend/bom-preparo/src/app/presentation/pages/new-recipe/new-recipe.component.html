@@ -1,0 +1,128 @@
+<h3>Criar receita</h3>
+
+<form [formGroup]="recipeForm" (ngSubmit)="onSubmit()" class="bp-form">
+  <div class="bp-form-group">
+    <div class="form-group bp-form-group">
+      <label>Nome da receita</label>
+      <input type="text" formControlName="name" class="bp-login-form-input form-control" placeholder="Nome da receita" [ngClass]="{ 'is-invalid': submitted && formField['name'].errors }" />
+
+      <div *ngIf="submitted && formField['name'].errors" class="invalid-feedback">
+        <div *ngIf="formField['name'].errors['required']">O nome da receita é obrigatório</div>
+      </div>
+    </div>
+
+    <div class="form-group bp-form-group">
+      <label>Descrição da receita</label>
+      <input type="text" formControlName="description" class="bp-login-form-input form-control" placeholder="Descrição da receita" [ngClass]="{ 'is-invalid': submitted && formField['description'].errors }" />
+
+      <div *ngIf="submitted && formField['description'].errors" class="invalid-feedback">
+        <div *ngIf="formField['description'].errors['required']">A descrição da receita é obrigatória</div>
+      </div>
+    </div>
+
+    <div class="bp-form-group">
+      <p>Ingredientes</p>
+    </div>
+
+    <div formArrayName="ingredients">
+      <div *ngFor="let ingredient of ingredients.controls; let i = index">
+        <div class="form-group bp-form-group bp-recipe-form-group">
+          <label>Nome do ingrediente</label>
+          <input type="text" formControlName="ingredientName" class="bp-login-form-input form-control" placeholder="Nome do ingrediente" />
+
+          <label>Quantidade do ingrediente</label>
+          <input type="number" formControlName="ingredientQuantity" class="bp-login-form-input form-control" placeholder="Quantidade do ingrediente" />
+
+          <label>Unidade de medida do ingrediente</label>
+
+          <select class="form-control" formControlName="ingredientMeasurementUnit">
+            <option disabled selected value="">Selecione uma opção</option>
+            <option [value]="0">Colher de chá</option>
+            <option [value]="1">Colher de sopa</option>
+            <option [value]="2">Copo</option>
+            <option [value]="3">Fatia</option>
+            <option [value]="4">g</option>
+            <option [value]="5">L</option>
+            <option [value]="6">ml</option>
+            <option [value]="7">Pacote</option>
+            <option [value]="8">Pedaço</option>
+            <option [value]="9">Quantidade</option>
+            <option [value]="10">kg</option>
+            <option [value]="11">Xícara de chá</option>
+            <option [value]="12">Xícara de café</option>
+          </select>
+
+          <button (click)="removeIngredient(i)">Remover</button>
+        </div>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" (click)="addIngredient()">Novo ingrediente</button>
+
+    <div class="form-group bp-form-group">
+      <label>Modo de preparo</label>
+      <input type="text" formControlName="preparation" class="bp-login-form-input form-control" placeholder="Modo de preparo" [ngClass]="{ 'is-invalid': submitted && formField['preparation'].errors }" />
+
+      <div *ngIf="submitted && formField['preparation'].errors" class="invalid-feedback">
+        <div *ngIf="formField['preparation'].errors['required']">O modo de preparo da receita é obrigatório</div>
+      </div>
+      <!-- textarea -->
+    </div>
+
+    <div class="form-group bp-form-group">
+      <label>A receita é privada?</label>
+
+      <select class="form-control" formControlName="isPrivate" [ngClass]="{ 'is-invalid': submitted && formField['isPrivate'].errors }">
+        <option disabled selected value="">Selecione uma opção</option>
+        <option [value]="true">Sim</option>
+        <option [value]="false">Não</option>
+      </select>
+
+      <div *ngIf="submitted && formField['isPrivate'].errors" class="invalid-feedback">
+        <div *ngIf="formField['isPrivate'].errors['required']">Selecione uma opção</div>
+      </div>
+    </div>
+
+    <div class="form-group bp-form-group">
+      <label>Selecione uma categoria</label>
+
+      <div>
+        <ng-container *ngFor="let category of categories">
+          <div>
+            <input type="checkbox" formControlName="categories" [value]="category.categoryId" (change)="selectCategory($event)">
+            <label>{{ category.name }}</label>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+
+    <div class="form-group bp-form-group">
+      <label>Nível de dificuldade</label>
+
+      <select class="form-control" formControlName="difficulty" [ngClass]="{ 'is-invalid': submitted && formField['difficulty'].errors }">
+        <option disabled selected value="">Selecione uma opção</option>
+        <option [value]="1">Fácil</option>
+        <option [value]="2">Médio</option>
+        <option [value]="3">Difícil</option>
+      </select>
+
+      <div *ngIf="submitted && formField['difficulty'].errors" class="invalid-feedback">
+        <div *ngIf="formField['difficulty'].errors['required']">Selecione uma opção</div>
+      </div>
+    </div>
+
+    <div class="form-group bp-form-group">
+      <label>Envie uma foto</label>
+      <input type="file" class="form-control" formControlName="image" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+    </div>
+  </div>
+
+  <div class="d-grid bp-login-form-button">
+    <button [disabled]="loading" class="btn btn-primary">
+      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+      Enviar
+    </button>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+</form>

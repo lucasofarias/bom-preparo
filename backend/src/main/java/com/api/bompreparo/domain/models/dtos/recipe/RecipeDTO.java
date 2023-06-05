@@ -14,6 +14,7 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data @NoArgsConstructor @AllArgsConstructor
 public class RecipeDTO {
@@ -34,6 +35,17 @@ public class RecipeDTO {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.LOOSE);
 
         return modelMapper.map(recipe, RecipeDTO.class);
+    }
+
+    public static List<RecipeDTO> toListDTO(List<Recipe> recipes) {
+        ModelMapper modelMapper = new ModelMapper();
+
+        List<RecipeDTO> dtos = recipes
+                .stream()
+                .map(x -> modelMapper.map(x, RecipeDTO.class))
+                .collect(Collectors.toList());
+
+        return dtos;
     }
 
 }

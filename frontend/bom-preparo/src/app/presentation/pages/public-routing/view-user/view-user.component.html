@@ -1,0 +1,25 @@
+<app-navbar></app-navbar>
+
+<div class="container">
+  <div class="bp-user">
+    <div>
+      <p class="bp-username">Usuário: {{ user.username }}</p>
+    </div>
+
+    <div>
+      <p class="bp-fullName">Nome completo: {{ user.fullName }}</p>
+    </div>
+
+    <div>
+      <p class="bp-email">E-mail: {{ user.email }}</p>
+    </div>
+
+    <div class="bp-recipes">
+      <h3>Receitas</h3>
+
+      <p class="bp-ingredient" *ngFor="let recipe of recipes">
+        {{ recipe.name }}
+      </p>
+    </div>
+  </div>
+</div>

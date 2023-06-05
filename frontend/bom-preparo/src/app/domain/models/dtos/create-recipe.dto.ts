@@ -1,5 +1,7 @@
 import { Category } from "../category.model";
 import { Image } from "../image.model";
+import { CategoryDTO } from "./category.dto";
+import { ImageDTO } from "./image.dto";
 import { RecipeIngredientDTO } from "./recipe-ingredient.dto";
 
 export class CreateRecipeDTO {
@@ -10,9 +12,9 @@ export class CreateRecipeDTO {
 
   isPrivate: boolean = false;
 
-  categories: Category[] = [];
+  categories: CategoryDTO[] = [];
   recipeIngredients: RecipeIngredientDTO[] = [];
-  images: Image[] = [];
+  image: Image = new Image();
 
   difficulty: string = "";
 

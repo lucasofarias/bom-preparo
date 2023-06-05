@@ -1,0 +1,22 @@
+.bp-row {
+  margin: 0;
+}
+
+.bp-ingredient {
+  border: 1px solid #FAA500;
+  border-radius: 6px;
+
+  height: 100px;
+
+  button {
+    background-color: #e9e8e6;
+  }
+}
+
+.bp-table {
+  text-align: center;
+
+  tbody tr th, tbody tr td {
+    vertical-align: middle;
+  }
+}

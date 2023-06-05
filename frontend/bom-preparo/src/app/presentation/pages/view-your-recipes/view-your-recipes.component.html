@@ -1,0 +1,26 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid">
+  <div *ngIf="recipes.length == 0">
+    <h3>Parece que você não possue receitas cadastradas</h3>
+
+    <button class="btn btn-primary" routerLink="/new-recipe">Enviar uma receita</button>
+  </div>
+
+  <div *ngIf="recipes.length > 0">
+    <h3 class="bp-title">Suas receitas</h3>
+
+    <div class="bp-line"></div>
+
+    <div class="bp-recipes">
+      <ng-container *ngFor="let recipe of recipes">
+        <div class="bp-recipe" [routerLink]="['/view-recipe/', recipe.recipeId]">
+          <img class="bp-recipe-image" [src]="'http://localhost:8080/image/view-image?imageId=' + recipe.image.imageId" alt="Recipe image">
+          <span class="bp-recipe-name">{{ recipe.name }}</span>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<app-modal #modal [modalConfig]="modalConfig" (newConfirmationEvent)="getConfirmationValue($event)"></app-modal>

@@ -99,7 +99,7 @@ public class UserController {
     @GetMapping(value = "/get-user")
     public ResponseEntity<Object> getUser(@RequestParam(value = "userId") Long userId) {
         try {
-            return ResponseEntity.status(HttpStatus.FOUND).body(userService.getUser(userId));
+            return ResponseEntity.status(HttpStatus.OK).body(userService.getUser(userId));
         }
 
         catch (Exception ex) {

@@ -9,6 +9,7 @@ import com.api.bompreparo.domain.models.Recipe;
 import com.api.bompreparo.domain.models.RecipeIngredient;
 import com.api.bompreparo.domain.models.User;
 import com.api.bompreparo.domain.models.dtos.recipe.CreateRecipeDTO;
+import com.api.bompreparo.domain.models.dtos.recipe.ListRecipeDTO;
 import com.api.bompreparo.domain.models.dtos.recipe.RecipeDTO;
 import com.api.bompreparo.domain.services.RecipeService;
 import com.api.bompreparo.domain.services.UserService;
@@ -173,7 +174,7 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<Recipe> listRecipesByUser(Long userId) {
+    public List<ListRecipeDTO> listRecipesByUser(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("O usuário não foi encontrado."));
 
@@ -183,7 +184,7 @@ public class RecipeServiceImpl implements RecipeService {
             throw new IllegalArgumentException("Nenhuma receita do usuário " + user.getUsername() + " foi encontrada.");
         }
 
-        return recipeList;
+        return ListRecipeDTO.toListDTO(recipeList);
     }
 
     @Override
@@ -209,8 +210,14 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public List<Recipe> listRecipesByIngredients(List<Long> ingredientIds) {
-        return null;
+    public List<RecipeDTO> listRecipesByIngredients(List<Long> ingredientIds) {
+        List<Recipe> recipeList = recipeRepository.findByIngredients_Ingredient_IdIn(ingredientIds);
+
+        if (recipeList.isEmpty()) {
+            throw new IllegalArgumentException("Nenhuma receita foi encontrada com esse(s) ingrediente(s).");
+        }
+
+        return RecipeDTO.toListDTO(recipeList);
     }
 
 }

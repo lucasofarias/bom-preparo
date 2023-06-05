@@ -164,6 +164,17 @@ public class RecipeController {
         }
     }
 
+    @GetMapping(value = "/list-recipes-by-ingredients")
+    public ResponseEntity<Object> listRecipesByIngredients(@RequestParam(value = "ingredientsId") List<Long> ingredientsId) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(recipeService.listRecipesByIngredients(ingredientsId));
+        }
+
+        catch (Exception ex) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+        }
+    }
+
     @PutMapping(value = "/update-recipe")
     public ResponseEntity<Object> updateRecipe(@RequestBody Recipe recipe) {
         try {

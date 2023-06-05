@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Recipe } from 'src/app/domain/models';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Recipe, User, UserDTO } from 'src/app/domain/models';
 import { RecipeDTO } from 'src/app/domain/models/dtos/recipe.dto';
 import { RecipeService } from 'src/app/domain/services/recipe.service';
 
@@ -13,7 +13,7 @@ export class ViewRecipeComponent implements OnInit {
 
   recipe: RecipeDTO = new RecipeDTO();
 
-  constructor(private recipeService: RecipeService, private route: ActivatedRoute) { }
+  constructor(private recipeService: RecipeService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.getRecipe();
@@ -29,6 +29,10 @@ export class ViewRecipeComponent implements OnInit {
         console.log(error);
       }
     });
+  }
+
+  viewUser(user: UserDTO): void {
+    this.router.navigate(['/view-user/', user.userId]);
   }
 
 }

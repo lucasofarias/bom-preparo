@@ -10,15 +10,15 @@
 
     <ul class="navbar-nav collapse navbar-collapse bp-navbar-ul">
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="" (click)="isMenuCollapsed = true">Explorar receitas</a>
+        <a class="nav-link" (click)="isMenuCollapsed = true" routerLink="/explore-recipes">Explorar receitas</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="" (click)="isMenuCollapsed = true">Suas receitas</a>
+        <a class="nav-link" (click)="isMenuCollapsed = true" routerLink="/view-your-recipes">Suas receitas</a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="" (click)="isMenuCollapsed = true">Seus ingredientes</a>
+        <a class="nav-link" (click)="isMenuCollapsed = true" routerLink="/view-pantry">Seus ingredientes</a>
       </li>
     </ul>
 
@@ -32,7 +32,7 @@
         <div class="offcanvas-body">
           <ul class="navbar-nav bp-offcanvas-ul">
             <li class="nav-item bp-offcanvas-li">
-              <a class="nav-link" [routerLink]="" (click)="isMenuCollapsed = true">
+              <a class="nav-link" routerLink="/explore-recipes" (click)="isMenuCollapsed = true">
                 <img src="../../../../assets/img/search.svg" class="bp-offcanvas-menu-icon"> Explorar receitas
               </a>
             </li>
@@ -40,7 +40,7 @@
             <div class="bp-offcanvas-menu-line"></div>
 
             <li class="nav-item bp-offcanvas-li">
-              <a class="nav-link" [routerLink]="" (click)="isMenuCollapsed = true">
+              <a class="nav-link" routerLink="/view-your-recipes" (click)="isMenuCollapsed = true">
                 <img src="../../../../assets/img/recipe.svg" class="bp-offcanvas-menu-icon"> Suas receitas
               </a>
             </li>
@@ -48,7 +48,7 @@
             <div class="bp-offcanvas-menu-line"></div>
 
             <li class="nav-item bp-offcanvas-li">
-              <a class="nav-link" [routerLink]="" (click)="isMenuCollapsed = true">
+              <a class="nav-link" routerLink="/view-pantry" (click)="isMenuCollapsed = true">
                 <img src="../../../../assets/img/fridge.svg" class="bp-offcanvas-menu-icon"> Seus ingredientes
               </a>
             </li>

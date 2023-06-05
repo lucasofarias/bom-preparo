@@ -140,7 +140,7 @@ public class IngredientController {
     }
 
     @DeleteMapping(value = "/remove-ingredient-from-pantry")
-    public ResponseEntity<Object> removeIngredientFromPantry(@RequestBody Long ingredientId) {
+    public ResponseEntity<Object> removeIngredientFromPantry(@RequestParam(value = "ingredientId") Long ingredientId) {
         try {
             ingredientService.removeIngredientFromPantry(ingredientId);
             return ResponseEntity.status(HttpStatus.OK).build();

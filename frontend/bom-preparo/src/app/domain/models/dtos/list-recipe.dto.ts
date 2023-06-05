@@ -1,4 +1,5 @@
 import { Image } from "../image.model";
+import { ImageDTO } from "./image.dto";
 import { UserDTO } from "./user.dto";
 
 export class ListRecipeDTO {
@@ -11,7 +12,7 @@ export class ListRecipeDTO {
   isPrivate: boolean = false;
   difficulty: string = "";
 
-  image: Image = new Image();
+  image: ImageDTO = new ImageDTO();
   creatorUser: UserDTO = new UserDTO();
 
 }

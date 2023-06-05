@@ -1,0 +1,42 @@
+<app-navbar></app-navbar>
+
+<div class="container-fluid">
+  <div class="bp-button">
+    <button type="button" class="btn btn-danger bp-add-ingredient-button" routerLink="/home">Voltar</button>
+    <button type="button" class="btn btn-primary bp-add-ingredient-button" routerLink="/add-ingredients-to-pantry">Adicionar ingredientes à despensa</button>
+  </div>
+
+  <table class="table table-striped bp-table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Ingrediente</th>
+        <th scope="col">Ação</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let ingredient of ingredients; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>
+          {{ingredient.name}}
+        </td>
+        <td>
+          <input type="checkbox" class="form-check-input" [value]="ingredient.id" (change)="selectIngredient($event)">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button type="button" (click)="listRecipesByIngredients()" class="btn btn-outline-primary">Encontrar receitas</button>
+
+  <div class="bp-recipes" *ngIf="recipes.length > 0">
+    <div class="bp-recipe" *ngFor="let recipe of recipes" [routerLink]="['/view-recipe/', recipe.recipeId]">
+      <img width="250px" height="250px" [src]="'http://localhost:8080/image/view-image?imageId=' + recipe.image.imageId" alt="">
+
+      <span>{{ recipe.name }}</span>
+    </div>
+  </div>
+</div>
+
+<app-modal #modal [modalConfig]="modalConfig" (newConfirmationEvent)="getConfirmationValue($event)"></app-modal>
