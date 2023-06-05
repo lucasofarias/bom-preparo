@@ -63,7 +63,7 @@ export class ExploreRecipesComponent implements OnInit {
       error: (error) => {
         if (this.selectedIngredients.length === 0) {
           this.modalConfig = {
-            success: () => true,
+            alert: () => true,
             message: 'Por favor, selecione um ingrediente.',
             closeButtonLabel: 'Fechar'
           };
